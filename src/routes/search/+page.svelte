@@ -39,7 +39,7 @@
         {#each data.spellcheck as spellcheck, i}
             {i > 0 ? " or " : ""}
             <a
-                class="italic text-gold-3"
+                class="text-gold-3 italic"
                 href="?query={encodeURIComponent(spellcheck)}"
             >
                 {spellcheck}</a
@@ -48,7 +48,7 @@
 {/if}
 
 <ol
-    class="grid grid-cols-[repeat(auto-fill,minmax(min(theme(spacing.72),100%),1fr))] gap-4 self-stretch"
+    class="grid grid-cols-[repeat(auto-fill,minmax(min(--spacing(72),100%),1fr))] gap-4 self-stretch"
 >
     {#if data.profile != null}
         <li class="col-span-full border-b-2 border-gold-4 pb-4">

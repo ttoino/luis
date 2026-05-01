@@ -17,5 +17,5 @@
     />
 
     <h3 class="h3 text-gold-1.5 text-center">{name}</h3>
-    <p class="bold-label text-center text-grey-1.5">{title}</p>
+    <p class="bold-label text-grey-1.5 text-center">{title}</p>
 </a>

@@ -2,10 +2,15 @@
 // for information about these interfaces
 declare global {
     namespace App {
+        interface Platform {
+            cf: CfProperties;
+            ctx: ExecutionContext;
+            env: Env;
+        }
+
         // interface Error {}
         // interface Locals {}
         // interface PageData {}
-        // interface Platform {}
     }
 }
 

@@ -28,5 +28,5 @@
     {src}
     {...$$restProps}
     class:blur-lg={!loaded}
-    class="overflow-hidden blur-0 transition {$$restProps.class}"
+    class="blur-0 overflow-hidden transition {$$restProps.class}"
 />

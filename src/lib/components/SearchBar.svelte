@@ -49,12 +49,12 @@
 >
     <div class="min-h-0">
         <div
-            class="relative mt-4 bg-gradient-to-tl from-gold-4 to-gold-5 p-[2px] sm:m-0"
+            class="relative mt-4 bg-linear-to-tl from-gold-4 to-gold-5 p-[2px] sm:m-0"
         >
             <label for="query" class="sr-only">Query</label>
             <input
                 type="search"
-                class="min-h-0 w-full bg-gradient-to-bl from-blue-5 to-blue-6 p-2 pr-12 !outline-none placeholder:text-grey-1.5"
+                class="placeholder:text-grey-1.5 min-h-0 w-full bg-linear-to-bl from-blue-5 to-blue-6 p-2 pr-12 outline-none!"
                 name="query"
                 id="query"
                 placeholder="Search"
@@ -63,7 +63,7 @@
             />
             <button
                 type="submit"
-                class="absolute bottom-0 right-0 top-0 flex aspect-square h-full items-center justify-center text-gold-4"
+                class="absolute top-0 right-0 bottom-0 flex aspect-square h-full items-center justify-center text-gold-4"
             >
                 <span class="sr-only"> Search </span>
                 <Icon src={MagnifyingGlass} class="h-6 w-6" />

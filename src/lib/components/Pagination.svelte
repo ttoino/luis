@@ -15,7 +15,7 @@
 {#if pages > 1}
     <div class="mt-8 max-w-full snap-x snap-mandatory overflow-auto">
         <nav
-            class="stat-number grid w-max grid-flow-col items-stretch justify-center leading-[1] [grid-auto-columns:1fr]"
+            class="stat-number grid w-max auto-cols-[1fr] grid-flow-col items-stretch justify-center leading-none"
         >
             {#if current > 1}
                 <a

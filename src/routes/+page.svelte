@@ -28,11 +28,11 @@
 </h2>
 
 <a
-    class="h3 group bg-gradient-to-br from-gold-5 via-gold-4 to-gold-1 p-[4px] transition-all duration-300 [background-size:200%_200%] hover:shadow-lg hover:[background-position:100%_100%]"
+    class="h3 group bg-linear-to-br from-gold-5 via-gold-4 to-gold-1 bg-size-[200%_200%] p-[4px] transition-all duration-300 hover:bg-position-[100%_100%] hover:shadow-lg"
     href="/search?query="
 >
     <span
-        class="inline-block bg-gradient-to-bl from-blue-4 via-blue-5 to-blue-6 px-12 py-2 text-gold-1 transition-all duration-300 [background-size:200%_200%] [background-position:0%_100%] group-hover:text-gold-4 group-hover:[background-position:100%_0%]"
+        class="inline-block bg-linear-to-bl from-blue-4 via-blue-5 to-blue-6 bg-size-[200%_200%] bg-position-[0%_100%] px-12 py-2 text-gold-1 transition-all duration-300 group-hover:bg-position-[100%_0%] group-hover:text-gold-4"
     >
         All stories
     </span>

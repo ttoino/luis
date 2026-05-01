@@ -6,7 +6,7 @@
 </script>
 
 <article
-    class="group relative flex h-full flex-row gap-[2px] bg-gradient-to-br from-gold-5 via-gold-4 to-gold-1 p-[4px] transition-all duration-300 [background-size:200%_200%] hover:shadow-lg hover:[background-position:100%_100%]"
+    class="group relative flex h-full flex-row gap-[2px] bg-linear-to-br from-gold-5 via-gold-4 to-gold-1 bg-size-[200%_200%] p-[4px] transition-all duration-300 hover:bg-position-[100%_100%] hover:shadow-lg"
 >
     <Image
         url={profile.image}
@@ -15,7 +15,7 @@
     />
 
     <div
-        class="flex-1 bg-gradient-to-bl from-blue-4 via-blue-5 to-blue-6 p-4 transition-all duration-300 [background-size:200%_200%] [background-position:0%_100%] group-hover:[background-position:100%_0%]"
+        class="flex-1 bg-linear-to-bl from-blue-4 via-blue-5 to-blue-6 bg-size-[200%_200%] bg-position-[0%_100%] p-4 transition-all duration-300 group-hover:bg-position-[100%_0%]"
     >
         <a href="/story/{profile.id}-bio" class="after:absolute after:inset-0">
             <h3
@@ -29,7 +29,7 @@
             <ul class="inline-flex flex-row flex-wrap gap-x-[1ch]">
                 {#each profile.aliases as alias}
                     <li
-                        class="bold-label transition-colors duration-300 before:text-grey-1.5 before:transition-colors before:duration-300 after:text-grey-1.5 after:transition-colors after:duration-300 after:content-[','] first:before:content-['aka_'] last:after:content-none group-hover:text-gold-3 group-hover:before:text-grey-1 group-hover:after:text-grey-1"
+                        class="bold-label before:text-grey-1.5 after:text-grey-1.5 transition-colors duration-300 group-hover:text-gold-3 before:transition-colors before:duration-300 group-hover:before:text-grey-1 after:transition-colors after:duration-300 after:content-[','] group-hover:after:text-grey-1 first:before:content-['aka_'] last:after:content-none"
                     >
                         {alias.replace(/\(.*\)/, "").trim()}
                     </li>
@@ -47,7 +47,7 @@
             <ul class="inline-flex flex-row flex-wrap gap-x-[1ch]">
                 {#each profile.races as race}
                     <li
-                        class="bold-label transition-colors duration-300 before:text-grey-1.5 before:transition-colors before:duration-300 after:text-grey-1.5 after:transition-colors after:duration-300 after:content-[','] first:before:content-['is_'] last:after:content-none group-hover:text-gold-3 group-hover:before:text-grey-1 group-hover:after:text-grey-1"
+                        class="bold-label before:text-grey-1.5 after:text-grey-1.5 transition-colors duration-300 group-hover:text-gold-3 before:transition-colors before:duration-300 group-hover:before:text-grey-1 after:transition-colors after:duration-300 after:content-[','] group-hover:after:text-grey-1 first:before:content-['is_'] last:after:content-none"
                     >
                         {race}
                     </li>
@@ -57,14 +57,14 @@
 
         {#if profile.origin}
             <p
-                class="bold-label transition-colors duration-300 before:text-grey-1.5 before:transition-colors before:duration-300 before:content-['from_'] group-hover:text-gold-3 group-hover:before:text-grey-1"
+                class="bold-label before:text-grey-1.5 transition-colors duration-300 group-hover:text-gold-3 before:transition-colors before:duration-300 before:content-['from_'] group-hover:before:text-grey-1"
             >
                 {profile.origin.name}
             </p>
         {/if}
 
         <section
-            class="prose line-clamp-3 truncate whitespace-normal text-grey-1.5 transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-hr:hidden"
+            class="text-grey-1.5 prose line-clamp-3 truncate whitespace-normal transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-hr:hidden"
         >
             {@html profile.content}
         </section>
