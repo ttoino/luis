@@ -34,7 +34,7 @@
         {/if}
 
         <section
-            class="text-grey-1.5 prose truncate whitespace-normal transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-a:hidden prose-hr:hidden"
+            class="prose truncate whitespace-normal text-grey-1.5 transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-a:hidden prose-hr:hidden"
             class:line-clamp-4={!story.author}
             class:line-clamp-3={story.author}
         >

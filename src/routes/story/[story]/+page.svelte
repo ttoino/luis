@@ -38,7 +38,7 @@
 <h2 class="h1 mt-16 text-center text-gold-1">{data.story.title}</h2>
 
 {#if data.story.author}
-    <p class="h3 text-grey-1.5 text-center before:content-['By_']">
+    <p class="h3 text-center text-grey-1.5 before:content-['By_']">
         {data.story.author}
     </p>
 {/if}

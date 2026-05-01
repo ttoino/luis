@@ -10,7 +10,11 @@
 
     <h1 class="h3 mr-auto text-gold-3">
         <span class="sr-only">LoL Universe Indexing and Search</span>
-        <enhanced:img src="$lib/images/logo.svg" alt="" class="h-[1.5em] w-auto"/>
+        <enhanced:img
+            src="$lib/images/logo.svg"
+            alt=""
+            class="h-[1.5em] w-auto"
+        />
     </h1>
 
     <SearchBar />

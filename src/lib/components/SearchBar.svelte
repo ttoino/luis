@@ -54,7 +54,7 @@
             <label for="query" class="sr-only">Query</label>
             <input
                 type="search"
-                class="placeholder:text-grey-1.5 min-h-0 w-full bg-linear-to-bl from-blue-5 to-blue-6 p-2 pr-12 outline-none!"
+                class="min-h-0 w-full bg-linear-to-bl from-blue-5 to-blue-6 p-2 pr-12 outline-none! placeholder:text-grey-1.5"
                 name="query"
                 id="query"
                 placeholder="Search"

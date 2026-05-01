@@ -29,7 +29,7 @@
             <ul class="inline-flex flex-row flex-wrap gap-x-[1ch]">
                 {#each profile.aliases as alias}
                     <li
-                        class="bold-label before:text-grey-1.5 after:text-grey-1.5 transition-colors duration-300 group-hover:text-gold-3 before:transition-colors before:duration-300 group-hover:before:text-grey-1 after:transition-colors after:duration-300 after:content-[','] group-hover:after:text-grey-1 first:before:content-['aka_'] last:after:content-none"
+                        class="bold-label transition-colors duration-300 group-hover:text-gold-3 before:text-grey-1.5 before:transition-colors before:duration-300 group-hover:before:text-grey-1 after:text-grey-1.5 after:transition-colors after:duration-300 after:content-[','] group-hover:after:text-grey-1 first:before:content-['aka_'] last:after:content-none"
                     >
                         {alias.replace(/\(.*\)/, "").trim()}
                     </li>
@@ -47,7 +47,7 @@
             <ul class="inline-flex flex-row flex-wrap gap-x-[1ch]">
                 {#each profile.races as race}
                     <li
-                        class="bold-label before:text-grey-1.5 after:text-grey-1.5 transition-colors duration-300 group-hover:text-gold-3 before:transition-colors before:duration-300 group-hover:before:text-grey-1 after:transition-colors after:duration-300 after:content-[','] group-hover:after:text-grey-1 first:before:content-['is_'] last:after:content-none"
+                        class="bold-label transition-colors duration-300 group-hover:text-gold-3 before:text-grey-1.5 before:transition-colors before:duration-300 group-hover:before:text-grey-1 after:text-grey-1.5 after:transition-colors after:duration-300 after:content-[','] group-hover:after:text-grey-1 first:before:content-['is_'] last:after:content-none"
                     >
                         {race}
                     </li>
@@ -57,14 +57,14 @@
 
         {#if profile.origin}
             <p
-                class="bold-label before:text-grey-1.5 transition-colors duration-300 group-hover:text-gold-3 before:transition-colors before:duration-300 before:content-['from_'] group-hover:before:text-grey-1"
+                class="bold-label transition-colors duration-300 group-hover:text-gold-3 before:text-grey-1.5 before:transition-colors before:duration-300 before:content-['from_'] group-hover:before:text-grey-1"
             >
                 {profile.origin.name}
             </p>
         {/if}
 
         <section
-            class="text-grey-1.5 prose line-clamp-3 truncate whitespace-normal transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-hr:hidden"
+            class="prose line-clamp-3 truncate whitespace-normal text-grey-1.5 transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-hr:hidden"
         >
             {@html profile.content}
         </section>
