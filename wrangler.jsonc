@@ -1,0 +1,39 @@
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "luis",
+    "main": ".svelte-kit/cloudflare/_worker.js",
+    "compatibility_date": "2026-04-12",
+    "compatibility_flags": ["nodejs_als", "nodejs_compat"],
+    "assets": {
+        "binding": "ASSETS",
+        "directory": ".svelte-kit/cloudflare",
+        "not_found_handling": "404-page",
+    },
+    "ai_search": [
+        {
+            "binding": "SEARCH",
+            "instance_name": "luis",
+        },
+    ],
+    "r2_buckets": [
+        {
+            "binding": "BUCKET",
+            "bucket_name": "luis",
+        },
+    ],
+    "workflows": [
+        {
+            "name": "luis",
+            "binding": "PIPELINE",
+            "class_name": "DataPipeline",
+        },
+    ],
+    "triggers": {
+        "crons": ["0 0 * * SUN"],
+    },
+    "workers_dev": true,
+    "preview_urls": true,
+    "observability": {
+        "enabled": true,
+    },
+}
