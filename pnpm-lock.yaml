@@ -14,6 +14,9 @@ importers:
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.3.0(jiti@2.6.1))
+      '@oselvar/sveltekit-add-worker-exports':
+        specifier: ^0.1.2
+        version: 0.1.2(esbuild@0.27.3)(vite@8.0.10(esbuild@0.27.3)(jiti@2.6.1))(wrangler@4.87.0(@cloudflare/workers-types@4.20260430.1))
       '@sveltejs/adapter-cloudflare':
         specifier: ^7.2.8
         version: 7.2.8(@sveltejs/kit@2.59.0(@sveltejs/vite-plugin-svelte@7.0.0(svelte@5.55.5(@typescript-eslint/types@8.59.1))(vite@8.0.10(esbuild@0.27.3)(jiti@2.6.1)))(svelte@5.55.5(@typescript-eslint/types@8.59.1))(typescript@6.0.3)(vite@8.0.10(esbuild@0.27.3)(jiti@2.6.1)))(wrangler@4.87.0(@cloudflare/workers-types@4.20260430.1))
@@ -626,6 +629,13 @@ packages:
   '@oozcitak/util@10.0.0':
     resolution: {integrity: sha512-hAX0pT/73190NLqBPPWSdBVGtbY6VOhWYK3qqHqtXQ1gK7kS2yz4+ivsN07hpJ6I3aeMtKP6J6npsEKOAzuTLA==}
     engines: {node: '>=20.0'}
+
+  '@oselvar/sveltekit-add-worker-exports@0.1.2':
+    resolution: {integrity: sha512-0b153lV/NOPsfzSnZRk6s0u9DE3K8rMpMYlvL8G/2zMstj2V0CAb199GEtbLghY6R7ioXf/GHk4ctjicUZN+Yw==}
+    peerDependencies:
+      esbuild: '>=0.17'
+      vite: '>=5'
+      wrangler: '>=4'
 
   '@oxc-project/types@0.127.0':
     resolution: {integrity: sha512-aIYXQBo4lCbO4z0R3FHeucQHpF46l2LbMdxRvqvuRuW2OxdnSkcng5B8+K12spgLDj93rtN3+J2Vac/TIO+ciQ==}
@@ -1326,6 +1336,9 @@ packages:
 
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
+
+  jsonc-parser@3.3.1:
+    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -2296,6 +2309,13 @@ snapshots:
 
   '@oozcitak/util@10.0.0': {}
 
+  '@oselvar/sveltekit-add-worker-exports@0.1.2(esbuild@0.27.3)(vite@8.0.10(esbuild@0.27.3)(jiti@2.6.1))(wrangler@4.87.0(@cloudflare/workers-types@4.20260430.1))':
+    dependencies:
+      esbuild: 0.27.3
+      jsonc-parser: 3.3.1
+      vite: 8.0.10(esbuild@0.27.3)(jiti@2.6.1)
+      wrangler: 4.87.0(@cloudflare/workers-types@4.20260430.1)
+
   '@oxc-project/types@0.127.0': {}
 
   '@polka/url@1.0.0-next.29': {}
@@ -2949,6 +2969,8 @@ snapshots:
   json-schema-traverse@0.4.1: {}
 
   json-stable-stringify-without-jsonify@1.0.1: {}
+
+  jsonc-parser@3.3.1: {}
 
   keyv@4.5.4:
     dependencies:

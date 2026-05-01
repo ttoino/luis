@@ -19,3 +19,4 @@ src/worker-configuration.d.ts
 .wrangler
 .dev.vars*
 !.dev.vars.example
+.dev-worker-wrangler.jsonc

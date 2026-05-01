@@ -19,6 +19,7 @@
     "devDependencies": {
         "@eslint/compat": "^2.0.5",
         "@eslint/js": "^10.0.1",
+        "@oselvar/sveltekit-add-worker-exports": "^0.1.2",
         "@sveltejs/adapter-cloudflare": "^7.2.8",
         "@sveltejs/enhanced-img": "^0.10.4",
         "@sveltejs/kit": "^2.59.0",
