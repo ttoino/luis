@@ -1,57 +1,57 @@
-export interface QueryRequest {
-    query: string;
-    filter?: string | string[];
-    offset?: number;
-    limit?: number;
-    fields?: string[];
-    sort?: string | string[];
-    facet?: Record<string, unknown>;
-    queries?: unknown;
-    params?: Record<string, string | number>;
-}
-
-export interface QueryResponse<Document> {
-    responseHeader: {
-        status: number;
-        QTime: number;
-        params: Record<string, string | number>;
-    };
-    response: {
-        numFound: number;
-        start: number;
-        numFoundExact: boolean;
-        docs: Document[];
-    };
-    spellcheck?: {
-        suggestions: (
-            | string
-            | {
-                  numFound: number;
-                  startOffset: number;
-                  endOffset: number;
-                  suggestion: string[];
-              }
-        )[];
-        collations: string[];
-    };
-    highlighting?: Record<string, Record<string, string[]>>;
-}
-
 export interface GetResponse<Document> {
     doc: Document;
 }
 
 export interface MLTResponse<Document> {
     match: {
-        numFound: number;
-        start: number;
-        numFoundExact: boolean;
         docs: Document[];
+        numFound: number;
+        numFoundExact: boolean;
+        start: number;
     };
     response: {
-        numFound: number;
-        start: number;
-        numFoundExact: boolean;
         docs: Document[];
+        numFound: number;
+        numFoundExact: boolean;
+        start: number;
+    };
+}
+
+export interface QueryRequest {
+    facet?: Record<string, unknown>;
+    fields?: string[];
+    filter?: string | string[];
+    limit?: number;
+    offset?: number;
+    params?: Record<string, number | string>;
+    queries?: unknown;
+    query: string;
+    sort?: string | string[];
+}
+
+export interface QueryResponse<Document> {
+    highlighting?: Record<string, Record<string, string[]>>;
+    response: {
+        docs: Document[];
+        numFound: number;
+        numFoundExact: boolean;
+        start: number;
+    };
+    responseHeader: {
+        params: Record<string, number | string>;
+        QTime: number;
+        status: number;
+    };
+    spellcheck?: {
+        collations: string[];
+        suggestions: (
+            | {
+                  endOffset: number;
+                  numFound: number;
+                  startOffset: number;
+                  suggestion: string[];
+              }
+            | string
+        )[];
     };
 }

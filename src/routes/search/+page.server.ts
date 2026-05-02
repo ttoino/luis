@@ -1,10 +1,12 @@
 import type { Champion, Story } from "$lib/documents";
 import type { QueryResponse } from "$lib/query";
-import { solrUrl } from "$lib/solr";
-import type { PageServerLoad } from "./$types";
-import { error } from "@sveltejs/kit";
 
-export const load: PageServerLoad = async ({ url, fetch }) => {
+import { error } from "@sveltejs/kit";
+import { solrUrl } from "$lib/solr";
+
+import type { PageServerLoad } from "./$types";
+
+export const load: PageServerLoad = async ({ fetch, url }) => {
     const query = url.searchParams.get("query") || "*:*";
     const page = url.searchParams.get("page") || "1";
 
@@ -12,51 +14,51 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
     const offset = (parseInt(page) - 1) * limit;
 
     const urlParams = new URLSearchParams({
-        q: query,
-        rows: limit.toString(),
-        start: offset.toString(),
-        sort: "score desc",
         defType: "edismax",
-        qf: "content^5 title^0.1 author",
-        pf: "content^3",
-        pf2: "content^3",
-        pf3: "content^3",
-        mm: "2",
         df: "content",
-        "q.alt": "*",
-        ps: "3",
-        qs: "1",
-        indent: "true",
         fl: "*,score",
-        "q.op": "OR",
-        tie: "0.1",
-
-        spellcheck: "true",
-
         hl: "true",
         "hl.fl": "content",
         "hl.fragsize": "100",
+        "hl.tag.post": "</mark>",
         "hl.tag.pre":
             '<mark class="bg-blue-4 rounded-sm px-1 group-hover:bg-blue-3 transition-colors duration-300 text-grey-4">',
-        "hl.tag.post": "</mark>",
+        indent: "true",
+        mm: "2",
+        pf: "content^3",
+        pf2: "content^3",
+        pf3: "content^3",
+        ps: "3",
+        q: query,
+        "q.alt": "*",
+        "q.op": "OR",
+        qf: "content^5 title^0.1 author",
+
+        qs: "1",
+
+        rows: limit.toString(),
+        sort: "score desc",
+        spellcheck: "true",
+        start: offset.toString(),
+        tie: "0.1",
     });
     const searchUrl = solrUrl("select", urlParams);
 
     try {
         const response = await fetch(searchUrl, {
-            method: "GET",
             headers: {
                 Accept: "application/json",
             },
+            method: "GET",
         });
 
         if (!response.ok) error(response.status, response.statusText);
 
         const data: QueryResponse<Story> = await response.json();
 
-        const results: (Story & {
+        const results: ({
             highlighting?: string;
-        })[] = data.response.docs;
+        } & Story)[] = data.response.docs;
         const maxPage = Math.ceil(data.response.numFound / limit);
 
         if (data.highlighting)
@@ -93,7 +95,7 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
                     result.highlighting += tag.replace("<", "</");
             }
 
-        let profile: (Champion & { content: string }) | null = null;
+        let profile: ({ content: string } & Champion) | null = null;
 
         for (let i = 0; i < results.length; i++) {
             if (
@@ -101,28 +103,30 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
                 results[i].id
             ) {
                 profile = {
-                    id: results[i]["related_champions.id"][0],
-                    name: results[i]["related_champions.name"][0],
-                    title: results[i]["related_champions.title"][0],
-                    release_date:
-                        results[i]["related_champions.release_date"][0],
-                    quote: results[i]["related_champions.quote"][0],
-                    image: results[i]["related_champions.image"][0],
-                    roles: results[i]["related_champions.roles"],
-                    skins: results[i]["related_champions.skins"],
-                    races: results[i]["related_champions.races"],
                     aliases: results[i]["related_champions.aliases"],
+                    content: results[i].content,
+                    id: results[i]["related_champions.id"][0],
+                    image: results[i]["related_champions.image"][0],
+                    name: results[i]["related_champions.name"][0],
+                    quote: results[i]["related_champions.quote"][0],
+                    races: results[i]["related_champions.races"],
                     related_champions:
                         results[i]["related_champions.related_champions"],
-                    type: "champion",
+                    release_date:
+                        results[i]["related_champions.release_date"][0],
+                    roles: results[i]["related_champions.roles"],
+                    skins: results[i]["related_champions.skins"],
+                    title: results[i]["related_champions.title"][0],
 
-                    content: results[i].content,
+                    type: "champion",
                 };
 
                 if (results[i]["related_champions.origin.id"])
                     profile.origin = {
-                        id: results[i]["related_champions.origin.id"][0],
-                        name: results[i]["related_champions.origin.name"][0],
+                        associated_champions:
+                            results[i][
+                                "related_champions.origin.associated_champions"
+                            ],
                         description:
                             results[i][
                                 "related_champions.origin.description"
@@ -131,11 +135,9 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
                             results[i][
                                 "related_champions.origin.description_raw"
                             ][0],
+                        id: results[i]["related_champions.origin.id"][0],
                         image: results[i]["related_champions.origin.image"][0],
-                        associated_champions:
-                            results[i][
-                                "related_champions.origin.associated_champions"
-                            ],
+                        name: results[i]["related_champions.origin.name"][0],
                         type: "region",
                     };
 
@@ -149,11 +151,11 @@ export const load: PageServerLoad = async ({ url, fetch }) => {
             .map((s) => s.toLowerCase());
 
         return {
-            results,
-            query: url.searchParams.get("query"),
             current: parseInt(page),
             pages: maxPage,
             profile,
+            query: url.searchParams.get("query"),
+            results,
             spellcheck,
         };
     } catch (e) {

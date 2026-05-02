@@ -1,17 +1,16 @@
 <script lang="ts">
-    import { browser } from "$app/environment";
-    import { onMount } from "svelte";
     import type { HTMLImgAttributes } from "svelte/elements";
 
-    interface $Props extends Omit<HTMLImgAttributes, "src"> {
-        url: string;
+    import { browser } from "$app/environment";
+    import { onMount } from "svelte";
+
+    let {url, ...props }: {
         alt: string;
-    }
+        url: string;
+    } & Omit<HTMLImgAttributes, "src"> = $props();
 
-    export let url: string;
-
-    let loaded = false;
-    $: src = loaded ? url : `${url}?width=100`;
+    let loaded = $state(false);
+    let src = $derived(loaded ? url : `${url}?width=100`);
 
     onMount(() => {
         if (browser) {
@@ -25,8 +24,8 @@
 </script>
 
 <img
-    {src}
-    {...$$restProps}
     class:blur-lg={!loaded}
-    class="blur-0 overflow-hidden transition {$$restProps.class}"
+    {src}
+    {...props}
+    class="blur-0 overflow-hidden transition {props.class}"
 />

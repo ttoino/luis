@@ -9,16 +9,11 @@
 </script>
 
 <MetaTags
-    title={data.story.title}
     description=""
-    titleTemplate="%s - LUIS"
     openGraph={{
-        type: "article",
-        siteName: "LUIS",
-        title: data.story.title,
         article: {
-            publishedTime: data.story.date,
             authors: data.story.author ? [data.story.author] : [],
+            publishedTime: data.story.date,
             tags: data.story["related_champions.name"],
         },
         images: [
@@ -26,13 +21,18 @@
                 url: data.story.image,
             },
         ],
+        siteName: "LUIS",
+        title: data.story.title,
+        type: "article",
     }}
+    title={data.story.title}
+    titleTemplate="%s - LUIS"
 />
 
 <Image
-    url={data.story.image}
-    alt=""
     class="-mt-8 max-h-[calc(100vh-20rem)] w-screen max-w-none object-cover md:-mt-16"
+    alt=""
+    url={data.story.image}
 />
 
 <h2 class="h1 mt-16 text-center text-gold-1">{data.story.title}</h2>
@@ -50,6 +50,7 @@
 {/if}
 
 <section class="prose mt-16 prose-invert">
+    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     {@html data.story.content}
 </section>
 
@@ -58,7 +59,7 @@
     <div class="relative max-w-full">
         <div
             class="absolute top-0 bottom-0 left-0 z-10 w-16 bg-linear-to-r from-blue-6 to-transparent"
-        />
+        ></div>
         <ol
             class="relative flex max-w-full snap-x flex-row gap-8 overflow-auto px-16"
         >
@@ -70,14 +71,14 @@
         </ol>
         <div
             class="absolute top-0 right-0 bottom-0 z-10 w-16 bg-linear-to-l from-blue-6 to-transparent"
-        />
+        ></div>
     </div>
 {/if}
 
 {#if data.story["related_champions.name"]?.length > 0}
     <h2 class="h1 mt-16 mb-8 text-center text-gold-1">Related Champions</h2>
     <ul class="flex flex-row flex-wrap justify-center gap-8">
-        {#each data.story["related_champions.id"] as championId, i}
+        {#each data.story["related_champions.id"] as championId, i (championId)}
             <li>
                 <RelatedChampion
                     name={data.story["related_champions.name"][i]}

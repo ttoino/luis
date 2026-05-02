@@ -1,28 +1,28 @@
 <script lang="ts">
-    import Story from "$lib/components/Story.svelte";
     import Pagination from "$lib/components/Pagination.svelte";
-    import { fly } from "svelte/transition";
     import Profile from "$lib/components/Profile.svelte";
+    import Story from "$lib/components/Story.svelte";
     import logoImage from "$lib/images/logo.svg";
     import { MetaTags } from "svelte-meta-tags";
+    import { fly } from "svelte/transition";
 
     export let data;
 </script>
 
 <MetaTags
-    title={data.query || "Search"}
     description="Search results for {data.query}"
-    titleTemplate="%s - LUIS"
     openGraph={{
-        type: "website",
-        siteName: "LUIS",
-        title: data.query || "Search",
         images: [
             {
                 url: logoImage,
             },
         ],
+        siteName: "LUIS",
+        title: data.query || "Search",
+        type: "website",
     }}
+    title={data.query || "Search"}
+    titleTemplate="%s - LUIS"
 />
 
 <h2 class="h1 mb-4 self-start">
@@ -36,7 +36,7 @@
 {#if data.spellcheck && data.spellcheck.length > 0}
     <p class="mb-4 self-start">
         Did you mean
-        {#each data.spellcheck as spellcheck, i}
+        {#each data.spellcheck as spellcheck, i (i)}
             {i > 0 ? " or " : ""}
             <a
                 class="text-gold-3 italic"
@@ -70,4 +70,4 @@
     {/each}
 </ol>
 
-<Pagination pages={data.pages} current={data.current} />
+<Pagination current={data.current} pages={data.pages} />

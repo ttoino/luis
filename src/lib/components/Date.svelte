@@ -1,35 +1,38 @@
-<script lang="ts">
-    const formats = {
-        short: {
-            month: "short",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-        },
+<script lang="ts" module>
+    const FORMATS = {
         long: {
-            year: "numeric",
-            month: "long",
             day: "numeric",
             hour: "numeric",
             minute: "numeric",
-        },
-
-        "short-date": {
-            month: "short",
-            day: "numeric",
+            month: "long",
+            year: "numeric",
         },
         "long-date": {
-            year: "numeric",
-            month: "long",
             day: "numeric",
+            month: "long",
+            year: "numeric",
+        },
+
+        short: {
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            month: "short",
+        },
+        "short-date": {
+            day: "numeric",
+            month: "short",
         },
     } as const satisfies Record<string, Parameters<Date["toLocaleString"]>[1]>;
+</script>
 
-    export let date: ConstructorParameters<typeof Date>[0];
-    export let format: keyof typeof formats = "short";
+<script lang="ts">
+    let {date, format}: {
+        date:ConstructorParameters<typeof Date>[0];
+        format: keyof typeof FORMATS} = $props();
 
-    $: dateObj = new Date(date);
-    $: formattedDate = dateObj.toLocaleDateString(undefined, formats[format]);
+    let dateObj = $derived(new Date(date));
+    let formattedDate = $derived(dateObj.toLocaleDateString(undefined, FORMATS[format]));
 </script>
 
 <time datetime={dateObj.toISOString()}>{formattedDate}</time>

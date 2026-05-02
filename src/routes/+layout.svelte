@@ -1,10 +1,12 @@
 <script lang="ts">
     import "./style.css";
 
-    import Header from "$lib/components/Header.svelte";
+    import { navigating } from "$app/state";
     import Footer from "$lib/components/Footer.svelte";
-    import { navigating } from "$app/stores";
+    import Header from "$lib/components/Header.svelte";
     import Loading from "$lib/components/Loading.svelte";
+
+    let { children } = $props();
 </script>
 
 <div class="flex min-h-full flex-col items-center">
@@ -12,9 +14,9 @@
 
     <main
         class="flex w-full max-w-screen-2xl flex-1 flex-col items-center justify-center p-8 transition-opacity md:p-16"
-        class:opacity-0={$navigating}
+        class:opacity-0={!!navigating.type}
     >
-        <slot />
+        {@render children?.()}
     </main>
 
     <Loading />

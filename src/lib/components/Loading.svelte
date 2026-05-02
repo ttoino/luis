@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { navigating } from "$app/stores";
+    import { navigating } from "$app/state";
 </script>
 
 <svg
-    width="1976"
+    class="pointer-events-none fixed top-1/2 left-1/2 z-20 h-32 max-h-full w-auto max-w-full -translate-x-1/2 -translate-y-1/2 transition-opacity"
+    class:opacity-0={!navigating.type}
+    aria-hidden="true"
+    fill="none"
     height="1000"
     viewBox="0 0 1976 1000"
-    fill="none"
+    width="1976"
     xmlns="http://www.w3.org/2000/svg"
-    class="pointer-events-none fixed top-1/2 left-1/2 z-20 h-32 max-h-full w-auto max-w-full -translate-x-1/2 -translate-y-1/2 transition-opacity"
-    class:opacity-0={!$navigating}
-    aria-hidden="true"
 >
     <g clip-path="url(#clip0_5_81)">
         <path
@@ -28,14 +28,14 @@
         />
         <mask
             id="mask0_5_81"
-            style="mask-type:luminance"
+            style:mask-type="luminance"
+            height="1000"
             maskUnits="userSpaceOnUse"
+            width="1976"
             x="0"
             y="0"
-            width="1976"
-            height="1000"
         >
-            <rect width="1976" height="1000" fill="white" />
+            <rect fill="white" height="1000" width="1976" />
             <path
                 d="M415.64 75V52.5H393.14H220.98H184.936L200.766 84.8817L231.38 147.505V653.122L201.109 715.003L185.266 747.39H221.32H611.49H628.551L633.155 730.963L668.805 603.773L676.814 575.2H647.14H415.64V75Z"
                 fill="black"
@@ -64,21 +64,21 @@
         <g mask="url(#mask0_5_81)">
             <path
                 id="magnifying-glass"
-                fill-rule="evenodd"
                 clip-rule="evenodd"
                 d="M636 400.5C636 530.563 530.563 636 400.5 636C270.437 636 165 530.563 165 400.5C165 270.437 270.437 165 400.5 165C530.563 165 636 270.437 636 400.5ZM594.789 629.751C542.401 674.193 474.581 701 400.5 701C234.538 701 100 566.462 100 400.5C100 234.538 234.538 100 400.5 100C566.462 100 701 234.538 701 400.5C701 468.959 678.108 532.071 639.56 582.599L866.239 809.277L820.277 855.239L594.789 629.751Z"
                 fill="#BF913B"
+                fill-rule="evenodd"
             />
         </g>
     </g>
     <defs>
         <clipPath id="clip0_5_81">
-            <rect width="1976" height="1000" fill="white" />
+            <rect fill="white" height="1000" width="1976" />
         </clipPath>
     </defs>
 </svg>
 
-<style lang="postcss">
+<style>
     @keyframes magnifying-glass {
         0% {
             rotate: 0deg;

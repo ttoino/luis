@@ -7,13 +7,13 @@
 </script>
 
 <a
-    href="/search?query={encodeURIComponent(name)}"
     class="flex w-40 flex-col items-center"
+    href="/search?query={encodeURIComponent(name)}"
 >
     <Image
-        url={image}
-        alt={name}
         class="h-36 w-36 rounded-full border-4 border-gold-3 object-cover"
+        alt={name}
+        url={image}
     />
 
     <h3 class="h3 text-gold-1.5 text-center">{name}</h3>

@@ -1,8 +1,9 @@
 <script lang="ts">
+    import type { FormEventHandler } from "svelte/elements";
+
     import { browser } from "$app/environment";
     import { onNavigate } from "$app/navigation";
     import { Icon, MagnifyingGlass, XMark } from "svelte-hero-icons";
-    import type { FormEventHandler } from "svelte/elements";
 
     let query = browser
         ? new URLSearchParams(window.location.search).get("query")
@@ -16,7 +17,7 @@
         clearTimeout(timeout);
 
         timeout = setTimeout(
-            () => (e.target as HTMLInputElement)?.form?.requestSubmit(),
+            () => (e.target as HTMLInputElement).form?.requestSubmit(),
             200,
         );
     };
@@ -33,40 +34,41 @@
 </script>
 
 <button
-    aria-hidden="true"
     class="p-2 sm:hidden"
-    on:click={() => (open = !open)}
+    aria-hidden="true"
+    onclick={() => (open = !open)}
+    type="button"
 >
-    <Icon src={open ? XMark : MagnifyingGlass} class="h-6 w-6" />
+    <Icon class="h-6 w-6" src={open ? XMark : MagnifyingGlass} />
 </button>
 
 <form
-    action="/search"
     class="grid w-full overflow-hidden transition-[grid-template-rows] sm:w-96 sm:grid-rows-1 {open
         ? 'grid-rows-[1fr]'
         : 'grid-rows-[0fr]'}"
+    action="/search"
     data-sveltekit-keepfocus
 >
     <div class="min-h-0">
         <div
             class="relative mt-4 bg-linear-to-tl from-gold-4 to-gold-5 p-[2px] sm:m-0"
         >
-            <label for="query" class="sr-only">Query</label>
+            <label class="sr-only" for="query">Query</label>
             <input
-                type="search"
-                class="min-h-0 w-full bg-linear-to-bl from-blue-5 to-blue-6 p-2 pr-12 outline-none! placeholder:text-grey-1.5"
-                name="query"
                 id="query"
+                name="query"
+                class="min-h-0 w-full bg-linear-to-bl from-blue-5 to-blue-6 p-2 pr-12 outline-none! placeholder:text-grey-1.5"
+                oninput={onInput}
                 placeholder="Search"
+                type="search"
                 value={query}
-                on:input={onInput}
             />
             <button
-                type="submit"
                 class="absolute top-0 right-0 bottom-0 flex aspect-square h-full items-center justify-center text-gold-4"
+                type="submit"
             >
                 <span class="sr-only"> Search </span>
-                <Icon src={MagnifyingGlass} class="h-6 w-6" />
+                <Icon class="h-6 w-6" src={MagnifyingGlass} />
             </button>
         </div>
     </div>

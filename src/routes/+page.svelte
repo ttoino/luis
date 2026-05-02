@@ -1,25 +1,26 @@
 <script lang="ts">
+    import { resolve } from "$app/paths";
     import logoImage from "$lib/images/logo.svg";
     import { MetaTags } from "svelte-meta-tags";
 </script>
 
 <MetaTags
-    title="Home"
     description="Discover the League of Legends Universe"
-    titleTemplate="%s - LUIS"
     openGraph={{
-        type: "website",
-        siteName: "LUIS",
-        title: "Home",
         images: [
             {
                 url: logoImage,
             },
         ],
+        siteName: "LUIS",
+        title: "Home",
+        type: "website",
     }}
+    title="Home"
+    titleTemplate="%s - LUIS"
 />
 
-<enhanced:img src="$lib/images/home.webp" alt="" class="h-auto w-32 md:w-64" />
+<enhanced:img class="h-auto w-32 md:w-64" alt="" src="$lib/images/home.webp" />
 <h1 class="h3 text-gold-4">
     <span>Discover the League of Legends Universe</span>
 </h1>
@@ -29,7 +30,7 @@
 
 <a
     class="h3 group bg-linear-to-br from-gold-5 via-gold-4 to-gold-1 bg-size-[200%_200%] p-[4px] transition-all duration-300 hover:bg-position-[100%_100%] hover:shadow-lg"
-    href="/search?query="
+    href={resolve("/search")}
 >
     <span
         class="inline-block bg-linear-to-bl from-blue-4 via-blue-5 to-blue-6 bg-size-[200%_200%] bg-position-[0%_100%] px-12 py-2 text-gold-1 transition-all duration-300 group-hover:bg-position-[100%_0%] group-hover:text-gold-4"
