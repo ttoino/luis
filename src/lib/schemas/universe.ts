@@ -1,8 +1,8 @@
-import { configure, type } from "arktype";
+import "./config";
+
+import { type } from "arktype";
 
 import { deepPartial } from "./helper";
-
-configure({ onUndeclaredKey: "reject" });
 
 export const BaseEntity = type({
     name: "string",
