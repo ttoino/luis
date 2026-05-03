@@ -9,10 +9,18 @@ export const load: PageServerLoad = async ({ params, platform }) => {
 
     if (!platform?.env.SEARCH) return error(500, "AI Search not configured");
 
-    const data = await platform.env.KV.get(`/stories/${slug}.html`);
+    const data = await platform.env.KV.get(`/stories/${slug}`, "json");
+
+    if (!data) return error(404, "Story not found");
+
+    console.log(data);
+
     const story = Story(data);
 
-    if (story instanceof type.errors) return error(404, "Story not found");
+    if (story instanceof type.errors) {
+        console.error(story.toString());
+        return error(500, "Unexpected data");
+    }
 
     return {
         story,

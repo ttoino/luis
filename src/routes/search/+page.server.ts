@@ -20,25 +20,28 @@ export const load: PageServerLoad = async ({ platform, url }) => {
             query,
         });
 
-        items = [...new Set(response.chunks.map((chunk) => chunk.item.key))];
+        items = [...new Set(response.chunks.map((chunk) => chunk.item.key.replace(".html", "")))];
     } else {
         const response = await platform.env.SEARCH.items.list({
             page,
             per_page,
         });
 
-        items = response.result.map((item) => item.key);
+        items = response.result.map((item) => item.key.replace(".html", ""));
         pages = Math.ceil((response.result_info?.total_count ?? 1) / per_page);
     }
 
-    const data = await platform.env.KV.get(
-        items.map((key) => key.replace(".json", "")),
+    const dataMap = await platform.env.KV.get(
+        items.map((key) => key),
         "json",
     );
+    const data = items.map((key) => dataMap.get(key));
     const results = Document.array()(data);
 
-    if (results instanceof type.errors)
+    if (results instanceof type.errors) {
+        console.error(results.toString());
         return error(500, "Error retrieving data");
+    }
 
     return {
         current: page,
