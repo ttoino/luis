@@ -1,17 +1,15 @@
 <script lang="ts">
     import Pagination from "$lib/components/Pagination.svelte";
     // import Profile from "$lib/components/Profile.svelte";
-    // import Story from "$lib/components/Story.svelte";
-    // import logoImage from "$lib/images/logo.svg";
-    // import { MetaTags } from "svelte-meta-tags";
-    // import { fly } from "svelte/transition";
+    import Story from "$lib/components/Story.svelte";
+    import logoImage from "$lib/images/logo.svg";
+    import { MetaTags } from "svelte-meta-tags";
+    import { fly } from "svelte/transition";
 
     let { data } = $props();
 </script>
 
-{JSON.stringify(data)}
-
-<!-- <MetaTags
+<MetaTags
     description="Search results for {data.query}"
     openGraph={{
         images: [
@@ -25,15 +23,15 @@
     }}
     title={data.query || "Search"}
     titleTemplate="%s - LUIS"
-/> -->
+/>
 
-<!-- <h2 class="h1 mb-4 self-start">
+<h2 class="h1 mb-4 self-start">
     {#if data.query}
         Search results for <span class="italic">{data.query}</span>
     {:else}
         All stories
     {/if}
-</h2> -->
+</h2>
 
 <!-- {#if data.spellcheck && data.spellcheck.length > 0}
     <p class="mb-4 self-start">
@@ -49,17 +47,16 @@
     </p>
 {/if} -->
 
-<!-- <ol
+<ol
     class="grid grid-cols-[repeat(auto-fill,minmax(min(--spacing(72),100%),1fr))] gap-4 self-stretch"
 >
-    {#if data.profile != null}
+    <!-- {#if data.profile != null}
         <li class="col-span-full border-b-2 border-gold-4 pb-4">
             <Profile profile={data.profile} />
         </li>
-    {/if}
+    {/if} -->
 
-
-    {#each data.results as story, i (story.id)}
+    {#each data.results.filter((story) => story.type === "story") as story, i (story.slug)}
         <li
             in:fly={{
                 delay: 100 * i,
@@ -71,6 +68,6 @@
     {:else}
         <p>No results found</p>
     {/each}
-</ol> -->
+</ol>
 
 <Pagination current={data.current} pages={data.pages} />

@@ -13,8 +13,6 @@ export const load: PageServerLoad = async ({ params, platform }) => {
 
     if (!data) return error(404, "Story not found");
 
-    console.log(data);
-
     const story = Story(data);
 
     if (story instanceof type.errors) {

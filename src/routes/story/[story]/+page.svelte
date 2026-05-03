@@ -8,8 +8,6 @@
     let { data } = $props();
 </script>
 
-{JSON.stringify(data)}
-
 <MetaTags
     description=""
     openGraph={{
@@ -38,16 +36,19 @@
 />
 
 <h2 class="h1 mt-16 text-center text-gold-1">{data.story.title}</h2>
-<p class="h3 text-center text-grey-1.5 before:content-['By_']">
-    {data.story.subtitle}
-</p>
+
+{#if data.story.subtitle}
+    <p class="h3 text-center text-grey-1.5">
+        {data.story.subtitle}
+    </p>
+{/if}
 
 <p class="stat-number">
     <Date date={data.story.releaseDate} format="long-date" />
 </p>
 
 {#each data.story.sections as section, i (i)}
-    <section class="prose mt-16 prose-invert">
+    <section class="prose mt-16 prose-invert prose-img:mx-auto">
         <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html section.content}
     </section>

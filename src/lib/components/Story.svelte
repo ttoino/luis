@@ -1,11 +1,12 @@
 <script lang="ts">
-    import type { Story } from "$lib/documents";
+    import type { Story } from "$lib/schemas/documents";
 
     import { resolve } from "$app/paths";
 
+    import Date from "./Date.svelte";
     import Image from "./Image.svelte";
 
-    let { story }: { story: { highlighting?: string } & Story } = $props();
+    let { story }: { story: Story } = $props();
 </script>
 
 <article
@@ -22,7 +23,7 @@
     >
         <a
             class="after:absolute after:inset-0"
-            href={resolve("/story/[story]", { story: story.id })}
+            href={resolve("/story/[story]", { story: story.slug })}
         >
             <h3
                 class="h4 truncate text-gold-3 transition-colors duration-300 group-hover:text-gold-1"
@@ -31,21 +32,19 @@
             </h3>
         </a>
 
-        {#if story.author}
-            <p
-                class="bold-label truncate transition-colors duration-300 group-hover:text-gold-3 before:content-['By_']"
-            >
-                {story.author}
-            </p>
-        {/if}
+        <p
+            class="bold-label truncate transition-colors duration-300 group-hover:text-gold-3"
+        >
+            {#if story.subtitle}{story.subtitle},
+            {/if}
+            <Date date={story.releaseDate} format="short-date" />
+        </p>
 
         <section
-            class="prose truncate whitespace-normal text-grey-1.5 transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-a:hidden prose-hr:hidden"
-            class:line-clamp-3={story.author}
-            class:line-clamp-4={!story.author}
+            class="prose line-clamp-3 truncate whitespace-normal text-grey-1.5 transition-colors duration-300 group-hover:text-grey-1 prose-p:m-0 prose-a:hidden prose-img:hidden prose-hr:hidden"
         >
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html story.highlighting || story.content}
+            {@html story.sections[0].content}
         </section>
     </div>
 </article>

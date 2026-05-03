@@ -20,7 +20,13 @@ export const load: PageServerLoad = async ({ platform, url }) => {
             query,
         });
 
-        items = [...new Set(response.chunks.map((chunk) => chunk.item.key.replace(".html", "")))];
+        items = [
+            ...new Set(
+                response.chunks.map((chunk) =>
+                    chunk.item.key.replace(".html", ""),
+                ),
+            ),
+        ];
     } else {
         const response = await platform.env.SEARCH.items.list({
             page,
@@ -46,6 +52,7 @@ export const load: PageServerLoad = async ({ platform, url }) => {
     return {
         current: page,
         pages,
+        query,
         results,
     };
 };

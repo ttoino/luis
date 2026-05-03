@@ -141,7 +141,8 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
         );
 
         const story: Story = {
-            image: data.story["story-sections"][0]["background-image"]?.uri ?? "",
+            image:
+                data.story["story-sections"][0]["background-image"]?.uri ?? "",
             releaseDate: data["release-date"],
             sections: data.story["story-sections"].map((section) => ({
                 champions: section["featured-champions"].map((champion) => ({

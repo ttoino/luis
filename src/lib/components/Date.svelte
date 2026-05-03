@@ -18,10 +18,12 @@
             hour: "numeric",
             minute: "numeric",
             month: "short",
+            year: "numeric",
         },
         "short-date": {
             day: "numeric",
             month: "short",
+            year: "numeric",
         },
     } as const satisfies Record<string, Parameters<Date["toLocaleString"]>[1]>;
 </script>
