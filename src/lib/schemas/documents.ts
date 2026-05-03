@@ -1,5 +1,3 @@
-import "./config";
-
 import { type } from "arktype";
 
 export const Champion = type({

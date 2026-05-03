@@ -1,4 +1,6 @@
 allowBuilds:
-    esbuild: true
-    sharp: true
-    workerd: true
+  esbuild: true
+  sharp: true
+  workerd: true
+patchedDependencies:
+  "@ark/schema": patches/@ark__schema.patch

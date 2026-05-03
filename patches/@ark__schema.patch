@@ -1,0 +1,19 @@
+diff --git a/out/kinds.js b/out/kinds.js
+index 0d9dec4284320212984f989d768b4548dfca11cc..cd79e151e1b367371f5a167d43b94d513b0de2bc 100644
+--- a/out/kinds.js
++++ b/out/kinds.js
+@@ -1,4 +1,4 @@
+-import { deepClone, envHasCsp, flatMorph, withAlphabetizedKeys } from "@ark/util";
++import { deepClone, flatMorph, withAlphabetizedKeys } from "@ark/util";
+ import { mergeConfigs } from "./config.js";
+ import { Predicate } from "./predicate.js";
+ import { Divisor } from "./refinements/divisor.js";
+@@ -40,7 +40,7 @@ $ark.defaultConfig = withAlphabetizedKeys(Object.assign(flatMorph(nodeImplementa
+     kind,
+     implementation.defaults
+ ]), {
+-    jitless: envHasCsp(),
++    jitless: true,
+     clone: deepClone,
+     onUndeclaredKey: "ignore",
+     exactOptionalPropertyTypes: true,

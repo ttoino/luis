@@ -1,5 +1,3 @@
-import "./config";
-
 import { type } from "arktype";
 
 import { deepPartial } from "./helper";
