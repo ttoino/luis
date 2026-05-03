@@ -15,17 +15,11 @@
             "instance_name": "luis",
         },
     ],
-    "r2_buckets": [
-        {
-            "binding": "BUCKET",
-            "bucket_name": "luis",
-        },
-    ],
     "workflows": [
         {
-            "name": "luis",
             "binding": "PIPELINE",
             "class_name": "DataPipeline",
+            "name": "luis",
         },
     ],
     "triggers": {
