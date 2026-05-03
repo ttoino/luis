@@ -5,7 +5,7 @@
 
     import Image from "./Image.svelte";
 
-    let {story}: {story: { highlighting?: string } & Story} = $props();
+    let { story }: { story: { highlighting?: string } & Story } = $props();
 </script>
 
 <article
@@ -20,7 +20,10 @@
     <div
         class="flex-1 bg-linear-to-bl from-blue-4 via-blue-5 to-blue-6 bg-size-[200%_200%] bg-position-[0%_100%] p-4 transition-all duration-300 group-hover:bg-position-[100%_0%]"
     >
-        <a class="after:absolute after:inset-0" href={resolve("/story/[story]", {story: story.id})}>
+        <a
+            class="after:absolute after:inset-0"
+            href={resolve("/story/[story]", { story: story.id })}
+        >
             <h3
                 class="h4 truncate text-gold-3 transition-colors duration-300 group-hover:text-gold-1"
             >

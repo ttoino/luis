@@ -4,7 +4,10 @@
     import { browser } from "$app/environment";
     import { onMount } from "svelte";
 
-    let {url, ...props }: {
+    let {
+        url,
+        ...props
+    }: {
         alt: string;
         url: string;
     } & Omit<HTMLImgAttributes, "src"> = $props();
@@ -27,5 +30,5 @@
     class:blur-lg={!loaded}
     {src}
     {...props}
-    class="blur-0 overflow-hidden transition {props.class}"
+    class="overflow-hidden transition-[filter] {props.class}"
 />

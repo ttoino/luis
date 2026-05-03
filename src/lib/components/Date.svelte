@@ -27,12 +27,18 @@
 </script>
 
 <script lang="ts">
-    let {date, format}: {
-        date:ConstructorParameters<typeof Date>[0];
-        format: keyof typeof FORMATS} = $props();
+    let {
+        date,
+        format,
+    }: {
+        date: ConstructorParameters<typeof Date>[0];
+        format: keyof typeof FORMATS;
+    } = $props();
 
     let dateObj = $derived(new Date(date));
-    let formattedDate = $derived(dateObj.toLocaleDateString(undefined, FORMATS[format]));
+    let formattedDate = $derived(
+        dateObj.toLocaleDateString(undefined, FORMATS[format]),
+    );
 </script>
 
 <time datetime={dateObj.toISOString()}>{formattedDate}</time>
