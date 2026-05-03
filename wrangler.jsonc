@@ -13,6 +13,14 @@
         {
             "binding": "SEARCH",
             "instance_name": "luis",
+            "remote": true,
+        },
+    ],
+    "kv_namespaces": [
+        {
+            "binding": "KV",
+            "id": "6d8ce9e3c81f42ed9662f83edca1b7c9",
+            "remote": true,
         },
     ],
     "workflows": [

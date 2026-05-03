@@ -1,3 +1,6 @@
+import type { Champion, Region, Story } from "$lib/schemas/documents";
+import type { Component } from "svelte";
+
 import {
     ChampionResponse,
     Explore2Response,
@@ -17,6 +20,7 @@ import { render } from "svelte/server";
 import ChampionComponent from "./components/Champion.svelte";
 import RegionComponent from "./components/Region.svelte";
 import StoryComponent from "./components/Story.svelte";
+import StorySectionComponent from "./components/StorySection.svelte";
 
 // Riot API constants
 const BASE_URL = "https://universe-meeps.leagueoflegends.com/v1/en_us";
@@ -52,38 +56,26 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
             fetchStep(`${CHAMPION_URL}/${slug}/index.json`, ChampionResponse),
         );
 
-        const html = await step.do(
-            `render champion ${slug}`,
-            async () =>
-                render(ChampionComponent, {
-                    props: {
-                        bio: data.champion.biography.full,
-                        description: data.champion.biography.short,
-                        image: data.champion.image.uri,
-                        name: data.champion.name,
-                        quote: data.champion.biography.quote,
-                        races: data.champion.races.map((race) => race.name),
-                        region:
-                            data.champion["associated-faction-slug"] ===
-                            "unaffiliated"
-                                ? undefined
-                                : data.champion["associated-faction-slug"],
-                        releaseDate: data.champion["release-date"],
-                        slug: data.champion.slug,
-                        title: data.champion.title,
-                    },
-                }).body,
-        );
+        const region = data.champion["associated-faction-slug"];
+        const champion: Champion = {
+            bio: data.champion.biography.full,
+            description: data.champion.biography.short,
+            image: data.champion.image.uri,
+            name: data.champion.name,
+            quote: data.champion.biography.quote,
+            races: data.champion.races.map((race) => race.name),
+            region: region === "unaffiliated" ? undefined : region,
+            releaseDate: data.champion["release-date"],
+            slug: data.champion.slug,
+            title: data.champion.title,
+        };
 
-        await step.do(
-            `upload champion ${slug}`,
-            async () =>
-                (
-                    await this.env.SEARCH.items.upload(
-                        `/champions/${slug}.html`,
-                        html,
-                    )
-                ).status,
+        await this.uploadGroup(
+            step,
+            "champion",
+            slug,
+            ChampionComponent,
+            champion,
         );
     }
 
@@ -106,38 +98,21 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
             fetchStep(`${REGION_URL}/${slug}/index.json`, FactionResponse),
         );
 
-        const html = await step.do(
-            `render region ${slug}`,
-            async () =>
-                render(RegionComponent, {
-                    props: {
-                        champions: data["associated-champions"].map(
-                            (champion) => ({
-                                name: champion.name,
-                                slug: champion.slug,
-                            }),
-                        ),
-                        description: data.faction.overview.short,
-                        image: data.faction.image.uri,
-                        name: data.faction.name,
-                    },
-                }).body,
-        );
+        const region: Region = {
+            champions: data["associated-champions"].map((champion) => ({
+                name: champion.name,
+                slug: champion.slug,
+            })),
+            description: data.faction.overview.short,
+            image: data.faction.image.uri,
+            name: data.faction.name,
+        };
 
-        await step.do(
-            `upload region ${slug}`,
-            async () =>
-                (
-                    await this.env.SEARCH.items.upload(
-                        `/regions/${slug}.html`,
-                        html,
-                    )
-                ).status,
-        );
+        await this.uploadGroup(step, "region", slug, RegionComponent, region);
     }
 
     override async run(
-        event: Readonly<WorkflowEvent<unknown>>,
+        _: Readonly<WorkflowEvent<unknown>>,
         step: WorkflowStep,
     ) {
         await Promise.all([this.exploreGroup(step), this.searchGroup(step)]);
@@ -163,29 +138,62 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
             fetchStep(`${STORY_URL}/${slug}/index.json`, StoryResponse),
         );
 
-        const html = await step.do(
-            `render story ${slug}`,
-            async () =>
-                render(StoryComponent, {
-                    props: {
-                        releaseDate: data["release-date"],
-                        slug: data.id,
-                        "story-sections": data.story["story-sections"],
-                        subtitle: data.story.subtitle,
-                        title: data.story.title,
-                    },
-                }).body,
+        const story: Story = {
+            image: data.story["story-sections"][0]["background-image"],
+            releaseDate: data["release-date"],
+            sections: data.story["story-sections"].map((section) => ({
+                champions: section["featured-champions"].map((champion) => ({
+                    name: champion.name,
+                    slug: champion.slug,
+                })),
+                content: render(StorySectionComponent, { props: section }).body,
+            })),
+            slug: data.id,
+            subtitle: data.story.subtitle,
+            title: data.story.title,
+        };
+
+        await this.uploadGroup(step, "story", slug, StoryComponent, story);
+    }
+
+    async uploadGroup<T extends Record<string, unknown>>(
+        step: WorkflowStep,
+        entityType: string,
+        slug: string,
+        EntityComponent: Component<T>,
+        entity: T,
+    ) {
+        const pluralType = entityType.endsWith("y")
+            ? entityType.substring(0, entityType.length - 1) + "ies"
+            : entityType + "s";
+
+        const doc = JSON.stringify(entity);
+
+        const previousDoc = await step.do(
+            `retrieve ${entityType} ${slug} from KV`,
+            async () => await this.env.KV.get(`/${pluralType}/${slug}`),
         );
 
-        await step.do(
-            `upload story ${slug}`,
-            async () =>
-                (
-                    await this.env.SEARCH.items.upload(
-                        `/stories/${slug}.html`,
-                        html,
-                    )
-                ).status,
-        );
+        if (doc === previousDoc) return;
+
+        const html = render(EntityComponent, { props: entity }).body;
+
+        await Promise.all([
+            step.do(
+                `upload ${entityType} ${slug} to AI Search`,
+                async () =>
+                    (
+                        await this.env.SEARCH.items.upload(
+                            `/${pluralType}/${slug}.html`,
+                            html,
+                        )
+                    ).status,
+            ),
+            step.do(
+                `upload ${entityType} ${slug} to KV`,
+                async () =>
+                    await this.env.KV.put(`/${pluralType}/${slug}`, doc),
+            ),
+        ]);
     }
 }

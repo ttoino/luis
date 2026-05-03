@@ -130,6 +130,18 @@ export const Faction = type({
 });
 export type Faction = typeof Faction.inferOut;
 
+export const StorySection = type({
+    "background-image": Media.or("null").optional(),
+    "featured-champions": Champion.array(),
+    "story-subsections": type({
+        content: "(string | null)?",
+        "icon-image": Media.or("null").optional(),
+    }).array(),
+    subtitle: "null?",
+    title: "null?",
+});
+export type StorySection = typeof StorySection.inferOut;
+
 export const Story = type({
     "custom-story-preview": "string",
     "story-sections": type({
