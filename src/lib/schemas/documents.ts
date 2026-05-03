@@ -11,6 +11,7 @@ export const Champion = type({
     releaseDate: "string.date.iso.parse",
     slug: "string",
     title: "string",
+    type: "'champion'",
 });
 export type Champion = typeof Champion.inferOut;
 
@@ -19,6 +20,7 @@ export const Region = type({
     description: "string",
     image: "string.url",
     name: "string",
+    type: "'region'",
 });
 export type Region = typeof Region.inferOut;
 
@@ -32,5 +34,9 @@ export const Story = type({
     slug: "string",
     subtitle: "string",
     title: "string",
+    type: "'story'",
 });
 export type Story = typeof Story.inferOut;
+
+export const Document = type.or(Champion, Region, Story);
+export type Document = typeof Document.inferOut;

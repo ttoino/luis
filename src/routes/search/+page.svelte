@@ -1,15 +1,17 @@
 <script lang="ts">
     import Pagination from "$lib/components/Pagination.svelte";
-    import Profile from "$lib/components/Profile.svelte";
-    import Story from "$lib/components/Story.svelte";
-    import logoImage from "$lib/images/logo.svg";
-    import { MetaTags } from "svelte-meta-tags";
-    import { fly } from "svelte/transition";
+    // import Profile from "$lib/components/Profile.svelte";
+    // import Story from "$lib/components/Story.svelte";
+    // import logoImage from "$lib/images/logo.svg";
+    // import { MetaTags } from "svelte-meta-tags";
+    // import { fly } from "svelte/transition";
 
-    export let data;
+    let { data } = $props();
 </script>
 
-<MetaTags
+{JSON.stringify(data)}
+
+<!-- <MetaTags
     description="Search results for {data.query}"
     openGraph={{
         images: [
@@ -23,17 +25,17 @@
     }}
     title={data.query || "Search"}
     titleTemplate="%s - LUIS"
-/>
+/> -->
 
-<h2 class="h1 mb-4 self-start">
+<!-- <h2 class="h1 mb-4 self-start">
     {#if data.query}
         Search results for <span class="italic">{data.query}</span>
     {:else}
         All stories
     {/if}
-</h2>
+</h2> -->
 
-{#if data.spellcheck && data.spellcheck.length > 0}
+<!-- {#if data.spellcheck && data.spellcheck.length > 0}
     <p class="mb-4 self-start">
         Did you mean
         {#each data.spellcheck as spellcheck, i (i)}
@@ -45,9 +47,9 @@
                 {spellcheck}</a
             >{/each}?
     </p>
-{/if}
+{/if} -->
 
-<ol
+<!-- <ol
     class="grid grid-cols-[repeat(auto-fill,minmax(min(--spacing(72),100%),1fr))] gap-4 self-stretch"
 >
     {#if data.profile != null}
@@ -55,6 +57,7 @@
             <Profile profile={data.profile} />
         </li>
     {/if}
+
 
     {#each data.results as story, i (story.id)}
         <li
@@ -68,6 +71,6 @@
     {:else}
         <p>No results found</p>
     {/each}
-</ol>
+</ol> -->
 
 <Pagination current={data.current} pages={data.pages} />

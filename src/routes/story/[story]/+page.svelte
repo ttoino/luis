@@ -1,20 +1,22 @@
 <script lang="ts">
     import Date from "$lib/components/Date.svelte";
     import Image from "$lib/components/Image.svelte";
-    import RelatedChampion from "$lib/components/RelatedChampion.svelte";
-    import Story from "$lib/components/Story.svelte";
+    // import RelatedChampion from "$lib/components/RelatedChampion.svelte";
+    // import Story from "$lib/components/Story.svelte";
     import { MetaTags } from "svelte-meta-tags";
 
-    export let data;
+    let { data } = $props();
 </script>
+
+{JSON.stringify(data)}
 
 <MetaTags
     description=""
     openGraph={{
         article: {
-            authors: data.story.author ? [data.story.author] : [],
-            publishedTime: data.story.date,
-            tags: data.story["related_champions.name"],
+            authors: [data.story.subtitle],
+            publishedTime: data.story.releaseDate.toISOString(),
+            // tags: data.story["related_champions.name"],
         },
         images: [
             {
@@ -36,25 +38,22 @@
 />
 
 <h2 class="h1 mt-16 text-center text-gold-1">{data.story.title}</h2>
+<p class="h3 text-center text-grey-1.5 before:content-['By_']">
+    {data.story.subtitle}
+</p>
 
-{#if data.story.author}
-    <p class="h3 text-center text-grey-1.5 before:content-['By_']">
-        {data.story.author}
-    </p>
-{/if}
+<p class="stat-number">
+    <Date date={data.story.releaseDate} format="long-date" />
+</p>
 
-{#if data.story.date}
-    <p class="stat-number">
-        <Date date={data.story.date} format="long-date" />
-    </p>
-{/if}
+{#each data.story.sections as section, i (i)}
+    <section class="prose mt-16 prose-invert">
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+        {@html section.content}
+    </section>
+{/each}
 
-<section class="prose mt-16 prose-invert">
-    <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-    {@html data.story.content}
-</section>
-
-{#if data.otherStories.length > 0}
+<!-- {#if data.otherStories.length > 0}
     <h2 class="h1 mt-16 mb-8 text-center text-gold-1">More stories</h2>
     <div class="relative max-w-full">
         <div
@@ -88,4 +87,4 @@
             </li>
         {/each}
     </ul>
-{/if}
+{/if} -->

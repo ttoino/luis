@@ -68,6 +68,7 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
             releaseDate: data.champion["release-date"],
             slug: data.champion.slug,
             title: data.champion.title,
+            type: "champion",
         };
 
         await this.uploadGroup(
@@ -106,6 +107,7 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
             description: data.faction.overview.short,
             image: data.faction.image.uri,
             name: data.faction.name,
+            type: "region",
         };
 
         await this.uploadGroup(step, "region", slug, RegionComponent, region);
@@ -151,6 +153,7 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
             slug: data.id,
             subtitle: data.story.subtitle,
             title: data.story.title,
+            type: "story",
         };
 
         await this.uploadGroup(step, "story", slug, StoryComponent, story);
