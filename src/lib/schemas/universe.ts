@@ -8,6 +8,7 @@ export const BaseEntity = type({
     name: "string",
     slug: "string",
 });
+export type BaseEntity = typeof BaseEntity.inferOut;
 
 export const Media = type({
     description: "string",
@@ -21,6 +22,7 @@ export const Media = type({
     x: "(number.integer | null)?",
     y: "(number.integer | null)?",
 });
+export type Media = typeof Media.inferOut;
 
 export const SearchChampion = type({
     "associated-faction": "''",
@@ -35,6 +37,7 @@ export const SearchChampion = type({
     type: "'champion'",
     url: "string",
 });
+export type SearchChampion = typeof SearchChampion.inferOut;
 
 export const Champion = SearchChampion.and({
     biography: {
@@ -49,6 +52,7 @@ export const Champion = SearchChampion.and({
     roles: BaseEntity.array(),
     video: Media.or("null").optional(),
 });
+export type Champion = typeof Champion.inferOut;
 
 export const BaseModule = type({
     description: "(string | null)?",
@@ -56,6 +60,7 @@ export const BaseModule = type({
     subtitle: "(string | null)?",
     title: "string",
 });
+export type BaseModule = typeof BaseModule.inferOut;
 
 export const FeaturedVideoModule = BaseModule.and({
     "featured-champions": Champion.array().pipe(() => null),
@@ -65,6 +70,7 @@ export const FeaturedVideoModule = BaseModule.and({
     type: "'featured-video'",
     uri: "string.url",
 });
+export type FeaturedVideoModule = typeof FeaturedVideoModule.inferOut;
 
 export const LinkOutModule = BaseModule.and({
     background: Media,
@@ -79,6 +85,7 @@ export const LinkOutModule = BaseModule.and({
     type: "'link-out'",
     url: "string",
 });
+export type LinkOutModule = typeof LinkOutModule.inferOut;
 
 export const StoryPreviewModule = BaseModule.and({
     background: Media,
@@ -90,12 +97,14 @@ export const StoryPreviewModule = BaseModule.and({
     type: "'story-preview'",
     url: "string",
 });
+export type StoryPreviewModule = typeof StoryPreviewModule.inferOut;
 
 export const Module = type.or(
     FeaturedVideoModule,
     LinkOutModule,
     StoryPreviewModule,
 );
+export type Module = typeof Module.inferOut;
 
 export const SearchFaction = type({
     "associated-champions": "never[]",
@@ -110,6 +119,7 @@ export const SearchFaction = type({
     type: "'faction'",
     url: "string",
 });
+export type SearchFaction = typeof SearchFaction.inferOut;
 
 export const Faction = type({
     image: Media,
@@ -118,6 +128,7 @@ export const Faction = type({
     slug: "string",
     video: Media,
 });
+export type Faction = typeof Faction.inferOut;
 
 export const Story = type({
     "custom-story-preview": "string",
@@ -134,6 +145,7 @@ export const Story = type({
     subtitle: "string",
     title: "string",
 });
+export type Story = typeof Story.inferOut;
 
 export const ChampionResponse = type({
     champion: Champion,
@@ -144,6 +156,7 @@ export const ChampionResponse = type({
     "related-champions": Champion.array(),
     title: "string",
 });
+export type ChampionResponse = typeof ChampionResponse.inferOut;
 
 export const FactionResponse = type({
     "associated-champions": Champion.array(),
@@ -154,6 +167,7 @@ export const FactionResponse = type({
     locale: "'en_us'",
     name: "string",
 });
+export type FactionResponse = typeof FactionResponse.inferOut;
 
 export const StoryResponse = type({
     dropcaps: "boolean",
@@ -166,6 +180,7 @@ export const StoryResponse = type({
     type: "'story'",
     "word-count": "number.integer",
 });
+export type StoryResponse = typeof StoryResponse.inferOut;
 
 export const Explore2Response = type({
     id: "'explore2'",
@@ -173,6 +188,7 @@ export const Explore2Response = type({
     modules: Module.array(),
     name: "'Explore2'",
 });
+export type Explore2Response = typeof Explore2Response.inferOut;
 
 export const SearchResponse = type({
     champions: SearchChampion.array(),
@@ -181,3 +197,4 @@ export const SearchResponse = type({
     locale: "'en_us'",
     name: "'Search'",
 });
+export type SearchResponse = typeof SearchResponse.inferOut;

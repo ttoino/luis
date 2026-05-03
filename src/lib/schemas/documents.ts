@@ -15,10 +15,7 @@ export const Champion = type({
 export type Champion = typeof Champion.inferOut;
 
 export const Region = type({
-    champions: type({
-        name: "string",
-        slug: "string",
-    }).array(),
+    champions: type({ name: "string", slug: "string" }).array(),
     description: "string",
     image: "string.url",
     name: "string",
@@ -26,8 +23,12 @@ export const Region = type({
 export type Region = typeof Region.inferOut;
 
 export const Story = type({
-    content: "string",
     image: "string.url",
+    releaseDate: "string.date.iso.parse",
+    sections: type({
+        champions: type({ name: "string", slug: "string" }).array(),
+        content: "string",
+    }).array(),
     slug: "string",
     subtitle: "string",
     title: "string",
