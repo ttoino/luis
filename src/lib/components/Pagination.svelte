@@ -1,15 +1,14 @@
 <script lang="ts">
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { ChevronLeft, ChevronRight, Icon } from "svelte-hero-icons";
 
-    export let pages: number;
-    export let current: number;
+    let { current, pages }: { current: number; pages: number } = $props();
 
-    $: hrefToPage = (to: number) => {
-        const params = new URLSearchParams($page.url.searchParams);
+    let hrefToPage = $derived((to: number) => {
+        const params = new URLSearchParams(page.url.searchParams);
         params.set("page", to.toString());
         return `?${params.toString()}`;
-    };
+    });
 </script>
 
 {#if pages > 1}
@@ -19,18 +18,18 @@
         >
             {#if current > 1}
                 <a
-                    href={hrefToPage(current - 1)}
                     class="inline-flex snap-center items-center justify-center border-2 border-l-0 border-gold-4 p-2 text-gold-1 first:border-l-2"
+                    href={hrefToPage(current - 1)}
                 >
-                    <Icon src={ChevronLeft} class="h-[1em] w-[1em]" />
+                    <Icon class="h-[1em] w-[1em]" src={ChevronLeft} />
                 </a>
             {/if}
 
-            {#each Array(pages).keys() as page}
+            {#each Array(pages).keys() as page (page)}
                 <a
-                    href={hrefToPage(page + 1)}
                     class="inline-flex snap-center items-center justify-center border-2 border-l-0 border-gold-4 p-2 text-gold-1 first:border-l-2"
                     class:text-gold-1={page + 1 === current}
+                    href={hrefToPage(page + 1)}
                 >
                     {page + 1}
                 </a>
@@ -38,10 +37,10 @@
 
             {#if current < pages}
                 <a
-                    href={hrefToPage(current + 1)}
                     class="inline-flex snap-center items-center justify-center border-2 border-l-0 border-gold-4 p-2 text-gold-1 first:border-l-2"
+                    href={hrefToPage(current + 1)}
                 >
-                    <Icon src={ChevronRight} class="h-[1em] w-[1em]" />
+                    <Icon class="h-[1em] w-[1em]" src={ChevronRight} />
                 </a>
             {/if}
         </nav>

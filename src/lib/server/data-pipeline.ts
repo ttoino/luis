@@ -107,6 +107,7 @@ export class DataPipeline extends WorkflowEntrypoint<Env> {
             description: data.faction.overview.short,
             image: data.faction.image.uri,
             name: data.faction.name,
+            slug: data.faction.slug,
             type: "region",
         };
 

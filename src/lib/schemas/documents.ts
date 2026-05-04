@@ -20,6 +20,7 @@ export const Region = type({
     description: "string",
     image: "string.url",
     name: "string",
+    slug: "string",
     type: "'region'",
 });
 export type Region = typeof Region.inferOut;

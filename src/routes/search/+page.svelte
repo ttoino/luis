@@ -1,5 +1,7 @@
 <script lang="ts">
+    import Champion from "$lib/components/Champion.svelte";
     import Pagination from "$lib/components/Pagination.svelte";
+    import Region from "$lib/components/Region.svelte";
     // import Profile from "$lib/components/Profile.svelte";
     import Story from "$lib/components/Story.svelte";
     import logoImage from "$lib/images/logo.svg";
@@ -56,14 +58,20 @@
         </li>
     {/if} -->
 
-    {#each data.results.filter((story) => story.type === "story") as story, i (story.slug)}
+    {#each data.results as doc, i (doc.slug)}
         <li
             in:fly={{
                 delay: 100 * i,
                 y: 100,
             }}
         >
-            <Story {story} />
+            {#if doc.type === "champion"}
+                <Champion champion={doc} />
+            {:else if doc.type === "region"}
+                <Region region={doc} />
+            {:else if doc.type === "story"}
+                <Story story={doc} />
+            {/if}
         </li>
     {:else}
         <p>No results found</p>
