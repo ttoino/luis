@@ -1,4 +1,5 @@
 import type { Type } from "arktype";
+import type { BaseTypeProp } from "arktype/internal/variants/object.ts";
 
 type DeepPartial<T> = T extends object
     ? { [K in keyof T]?: DeepPartial<T[K]> }
@@ -9,5 +10,8 @@ export const deepPartial = <T extends Type>(
 ): Type<DeepPartial<T["inferOut"]>> =>
     (t
         .ifExtends("object")
-        ?.map((prop) => ({ ...prop, value: deepPartial(prop.value) }))
+        ?.map((prop: BaseTypeProp) => ({
+            ...prop,
+            value: deepPartial(prop.value),
+        }))
         .partial() ?? t.or("null")) as Type<DeepPartial<T["inferOut"]>>;

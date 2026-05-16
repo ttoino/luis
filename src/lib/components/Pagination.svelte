@@ -1,10 +1,12 @@
 <script lang="ts">
+    /* eslint-disable svelte/no-navigation-without-resolve */
     import { page } from "$app/state";
     import { ChevronLeft, ChevronRight, Icon } from "svelte-hero-icons";
 
     let { current, pages }: { current: number; pages: number } = $props();
 
     let hrefToPage = $derived((to: number) => {
+        // eslint-disable-next-line svelte/prefer-svelte-reactivity
         const params = new URLSearchParams(page.url.searchParams);
         params.set("page", to.toString());
         return `?${params.toString()}`;

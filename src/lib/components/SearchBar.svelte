@@ -16,7 +16,7 @@
     const onInput: FormEventHandler<HTMLInputElement> = (e) => {
         clearTimeout(timeout);
 
-        timeout = setTimeout(
+        timeout = window.setTimeout(
             () => (e.target as HTMLInputElement).form?.requestSubmit(),
             200,
         );
@@ -51,7 +51,7 @@
 >
     <div class="min-h-0">
         <div
-            class="relative mt-4 bg-linear-to-tl from-gold-4 to-gold-5 p-[2px] sm:m-0"
+            class="relative mt-4 bg-linear-to-tl from-gold-4 to-gold-5 p-0.5 sm:m-0"
         >
             <label class="sr-only" for="query">Query</label>
             <input

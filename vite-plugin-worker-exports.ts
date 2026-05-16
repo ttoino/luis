@@ -1,3 +1,5 @@
+import type { Config } from "@sveltejs/kit";
+
 import { loadSvelteConfig, svelte } from "@sveltejs/vite-plugin-svelte";
 import { access, rename, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
@@ -22,7 +24,7 @@ export const customWorkerExports = (options: {
         if (!(await exists(workerPath))) return;
 
         // Load the project's svelte.config.js to reuse its settings
-        const svelteConfig = await loadSvelteConfig();
+        const svelteConfig: Config | undefined = await loadSvelteConfig();
         const libDir = svelteConfig?.kit?.files?.lib ?? "src/lib";
 
         // Bundle the named exports using Vite + Svelte SSR plugin.
