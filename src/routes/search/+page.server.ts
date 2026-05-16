@@ -1,6 +1,5 @@
 import { error } from "@sveltejs/kit";
-import { Document } from "$lib/schemas/documents";
-import { type } from "arktype";
+import { getDocuments } from "$lib/server/kv";
 
 import type { PageServerLoad } from "./$types";
 
@@ -17,7 +16,12 @@ export const load: PageServerLoad = async ({ platform, url }) => {
 
     if (query) {
         const response = await platform.env.SEARCH.search({
-            query,
+            messages: [
+                {
+                    content: query,
+                    role: "user",
+                },
+            ],
         });
 
         items = [
@@ -37,17 +41,7 @@ export const load: PageServerLoad = async ({ platform, url }) => {
         pages = Math.ceil((response.result_info?.total_count ?? 1) / per_page);
     }
 
-    const dataMap = await platform.env.KV.get(
-        items.map((key) => key),
-        "json",
-    );
-    const data = items.map((key) => dataMap.get(key));
-    const results = Document.array()(data);
-
-    if (results instanceof type.errors) {
-        console.error(results.toString());
-        return error(500, "Error retrieving data");
-    }
+    const results = await getDocuments(platform.env.KV, items);
 
     return {
         current: page,
