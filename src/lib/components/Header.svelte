@@ -1,19 +1,34 @@
 <script lang="ts">
     import { resolve } from "$app/paths";
-    import { Home, Icon } from "svelte-hero-icons";
 
     import SearchBar from "./SearchBar.svelte";
+
+    let scrolled = $state(false);
+
+    function scrollAttachment(element: HTMLElement) {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                scrolled = !entry.isIntersecting;
+            },
+            { threshold: 0 },
+        );
+
+        observer.observe(element);
+
+        return () => observer.disconnect();
+    }
 </script>
 
-<header
-    class="sticky top-0 z-50 flex flex-row flex-wrap items-center justify-between gap-x-4 self-stretch bg-linear-to-b from-blue-6 to-blue-7 p-4 shadow-xl sm:flex-nowrap"
->
-    <a class="p-2 text-gold-3" href={resolve("/")}>
-        <Icon class="h-8 w-8" src={Home} />
-    </a>
+<div class="absolute top-0 h-px w-full" {@attach scrollAttachment}></div>
 
-    <h1 class="h3 mr-auto text-gold-3">
-        <span class="sr-only">LoL Universe Indexing and Search</span>
+<header
+    class="fixed inset-0 bottom-auto z-50 flex flex-row flex-wrap items-center justify-between gap-x-4 self-stretch bg-linear-to-b from-transparent to-transparent p-4 transition-colors data-scrolled:from-blue-6 data-scrolled:to-blue-7 data-scrolled:shadow-xl sm:flex-nowrap"
+    data-scrolled={scrolled || undefined}
+>
+    <h1 class="h3 relative mr-auto text-gold-3">
+        <a class="absolute inset-0" href={resolve("/")}>
+            <span class="sr-only">LoL Universe Indexing and Search</span>
+        </a>
         <enhanced:img
             class="h-[1.5em] w-auto"
             alt=""

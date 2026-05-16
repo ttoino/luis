@@ -1,21 +1,27 @@
 <script lang="ts">
+    import type { Champion } from "$lib/schemas/documents";
+
+    import { resolve } from "$app/paths";
+
     import Image from "./Image.svelte";
 
-    export let name: string;
-    export let image: string;
-    export let title: string;
+    let { champion }: { champion: Champion } = $props();
 </script>
 
 <a
-    class="flex w-40 flex-col items-center"
-    href="/search?query={encodeURIComponent(name)}"
+    class="flex w-36 flex-col items-center"
+    href={resolve("/champion/[champion]", { champion: champion.slug })}
 >
     <Image
         class="h-36 w-36 rounded-full border-4 border-gold-3 object-cover"
-        alt={name}
-        url={image}
+        alt=""
+        url={champion.image}
     />
 
-    <h3 class="h3 text-gold-1.5 text-center">{name}</h3>
-    <p class="bold-label text-center text-grey-1.5">{title}</p>
+    <h4 class="h4 text-gold-1.5 mt-2 text-center text-nowrap">
+        {champion.name}
+    </h4>
+    <p class="bold-label text-center text-nowrap text-grey-1.5">
+        {champion.title}
+    </p>
 </a>

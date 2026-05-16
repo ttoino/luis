@@ -6,7 +6,7 @@
     import Date from "./Date.svelte";
     import Preview from "./Preview.svelte";
 
-    let {champion} : {champion: Champion} = $props();
+    let { champion }: { champion: Champion } = $props();
 </script>
 
 <Preview
@@ -15,7 +15,10 @@
 >
     {#snippet title()}{champion.name}{/snippet}
     {#snippet subtitle()}
-        {champion.title}, <Date date={champion.releaseDate} format="short-date" />
+        {champion.title}, <Date
+            date={champion.releaseDate}
+            format="short-date"
+        />
     {/snippet}
     <!-- eslint-disable-next-line svelte/no-at-html-tags -->
     {#snippet content()}{@html champion.description}{/snippet}

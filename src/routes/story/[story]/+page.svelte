@@ -1,11 +1,21 @@
 <script lang="ts">
-    import Date from "$lib/components/Date.svelte";
-    import Image from "$lib/components/Image.svelte";
-    // import RelatedChampion from "$lib/components/RelatedChampion.svelte";
+    import Button from "$lib/components/Button.svelte";
+    import PageHeader from "$lib/components/PageHeader.svelte";
+    import RelatedChampion from "$lib/components/RelatedChampion.svelte";
+    import Sections from "$lib/components/Sections.svelte";
     // import Story from "$lib/components/Story.svelte";
     import { MetaTags } from "svelte-meta-tags";
+    import { fly } from "svelte/transition";
 
     let { data } = $props();
+
+    let sentinel: HTMLDivElement;
+    let section = $state(0);
+
+    const setSection = (newSection: number) => {
+        section = newSection;
+        window.scroll({ behavior: "smooth", top: sentinel.offsetTop - 96 });
+    };
 </script>
 
 <MetaTags
@@ -29,31 +39,75 @@
     titleTemplate="%s - LUIS"
 />
 
-<Image
-    class="-mt-8 max-h-[calc(100vh-20rem)] w-screen max-w-none object-cover md:-mt-16"
-    alt=""
-    url={data.story.image}
+{#snippet sections()}
+    <div bind:this={sentinel}></div>
+    <Sections
+        sections={data.story.sections.length}
+        bind:section={() => section, setSection}
+    />
+{/snippet}
+
+<PageHeader
+    date={data.story.releaseDate}
+    extra={data.story.sections.length > 1 ? sections : undefined}
+    image={data.story.image}
+    subtitle={data.story.subtitle}
+    title={data.story.title}
 />
 
-<h2 class="h1 mt-16 text-center text-gold-1">{data.story.title}</h2>
+<div class="grid">
+    {#key section}
+        <section
+            class="col-start-1 row-start-1 prose transition-[font-size,line-height] xl:prose-lg prose-img:mx-auto"
+            in:fly={{ x: 48 }}
+            out:fly={{ x: -48 }}
+        >
+            <!-- eslint-disable-next-line svelte/no-at-html-tags -->
+            {@html data.story.sections[section].content}
+        </section>
+    {/key}
+</div>
 
-{#if data.story.subtitle}
-    <p class="h3 text-center text-grey-1.5">
-        {data.story.subtitle}
-    </p>
+{#if data.story.sections.length > 1}
+    <div class="mt-4 flex w-full max-w-prose flex-row justify-around">
+        <Button
+            class="[corner-shape:bevel] supports-corner-shape:rounded-l-full supports-corner-shape:pl-1 supports-corner-shape:*:pl-6"
+            disabled={section === 0}
+            onclick={() => setSection(section - 1)}
+            type="button">Go back</Button
+        >
+        <Button
+            class="[corner-shape:bevel] supports-corner-shape:rounded-r-full supports-corner-shape:pr-1 supports-corner-shape:*:pr-6"
+            disabled={section === data.story.sections.length - 1}
+            onclick={() => setSection(section + 1)}
+            type="button"
+        >
+            Keep reading
+        </Button>
+    </div>
 {/if}
 
-<p class="stat-number">
-    <Date date={data.story.releaseDate} format="long-date" />
-</p>
+{#await data.relatedChampions then champions}
+    {@const sectionChampions = champions[section]}
+    {#if sectionChampions}
+        <h3 class="h2 mt-8 mb-8 text-center text-gold-1">Featuring</h3>
+        <div class="grid" in:fly={{ x: 48 }} out:fly={{ x: -48 }}>
+            {#key section}
+                <ul
+                    class="col-start-1 row-start-1 flex flex-row flex-wrap justify-center gap-8"
+                    in:fly={{ x: 48 }}
+                    out:fly={{ x: -48 }}
+                >
+                    {#each sectionChampions as champion (champion.slug)}
+                        <li><RelatedChampion {champion} /></li>
+                    {/each}
+                </ul>
+            {/key}
+        </div>
+    {/if}
+{/await}
 
-{#each data.story.sections as section, i (i)}
-    <section class="prose mt-16 prose-invert prose-img:mx-auto">
-        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-        {@html section.content}
-    </section>
-{/each}
-
+<!-- TODO: Use AI Search to get other stories -->
 <!-- {#if data.otherStories.length > 0}
     <h2 class="h1 mt-16 mb-8 text-center text-gold-1">More stories</h2>
     <div class="relative max-w-full">
@@ -73,19 +127,4 @@
             class="absolute top-0 right-0 bottom-0 z-10 w-16 bg-linear-to-l from-blue-6 to-transparent"
         ></div>
     </div>
-{/if}
-
-{#if data.story["related_champions.name"]?.length > 0}
-    <h2 class="h1 mt-16 mb-8 text-center text-gold-1">Related Champions</h2>
-    <ul class="flex flex-row flex-wrap justify-center gap-8">
-        {#each data.story["related_champions.id"] as championId, i (championId)}
-            <li>
-                <RelatedChampion
-                    name={data.story["related_champions.name"][i]}
-                    image={data.story["related_champions.image"][i]}
-                    title={data.story["related_champions.title"][i]}
-                />
-            </li>
-        {/each}
-    </ul>
 {/if} -->
