@@ -1,7 +1,9 @@
+import type { SitemapGenerator } from "$lib/server/sitemap";
+
 import { error } from "@sveltejs/kit";
 import { getRegion } from "$lib/server/kv";
 
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad, RouteParams } from "./$types";
 
 export const load: PageServerLoad = async ({ params, platform }) => {
     const { region: slug } = params;
@@ -14,3 +16,8 @@ export const load: PageServerLoad = async ({ params, platform }) => {
         region,
     };
 };
+
+export const _sitemap: SitemapGenerator<RouteParams> = async ({ platform }) =>
+    (await platform?.env.KV.list({ prefix: "/regions/" }))?.keys.map(
+        ({ name }) => ({ region: name.replace("/regions/", "") }),
+    ) ?? [];

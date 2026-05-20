@@ -1,7 +1,9 @@
+import type { SitemapGenerator } from "$lib/server/sitemap";
+
 import { error } from "@sveltejs/kit";
 import { getChampion, getStory } from "$lib/server/kv";
 
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad, RouteParams } from "./$types";
 
 export const load: PageServerLoad = async ({ params, platform }) => {
     const { story: slug } = params;
@@ -25,3 +27,8 @@ export const load: PageServerLoad = async ({ params, platform }) => {
         story,
     };
 };
+
+export const _sitemap: SitemapGenerator<RouteParams> = async ({ platform }) =>
+    (await platform?.env.KV.list({ prefix: "/stories/" }))?.keys.map(
+        ({ name }) => ({ story: name.replace("/stories/", "") }),
+    ) ?? [];

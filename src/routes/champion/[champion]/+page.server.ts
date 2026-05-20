@@ -1,7 +1,9 @@
+import type { SitemapGenerator } from "$lib/server/sitemap";
+
 import { error } from "@sveltejs/kit";
 import { getChampion } from "$lib/server/kv";
 
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad, RouteParams } from "./$types";
 
 export const load: PageServerLoad = async ({ params, platform }) => {
     const { champion: slug } = params;
@@ -14,3 +16,8 @@ export const load: PageServerLoad = async ({ params, platform }) => {
         champion,
     };
 };
+
+export const _sitemap: SitemapGenerator<RouteParams> = async ({ platform }) =>
+    (await platform?.env.KV.list({ prefix: "/champions/" }))?.keys.map(
+        ({ name }) => ({ champion: name.replace("/champions/", "") }),
+    ) ?? [];
