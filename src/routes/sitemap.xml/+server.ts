@@ -1,3 +1,5 @@
+import type { SitemapGenerator } from "$lib/server/sitemap";
+
 import { text } from "@sveltejs/kit";
 import { resolve } from "$app/paths";
 import { SitemapStream, streamToPromise } from "sitemap";
@@ -10,23 +12,34 @@ export const GET: RequestHandler = async (req) => {
     });
 
     try {
-        const routes = import.meta.glob("../**/+page.svelte");
-        for (const route in routes) {
-            const base = route.replace("/+page.svelte", "");
-            const id = base.replace("..", "") || "/";
+        const staticRoutes = import.meta.glob("../**/+page.svelte");
+        for (const route in staticRoutes) {
+            const id =
+                route.replace("..", "").replace("/+page.svelte", "") || "/";
 
-            if (route.includes("[")) {
+            if (!id.includes("[")) {
+                // @ts-expect-error: Typescript can't narrow this
+                stream.write({ url: resolve(id) });
+            }
+        }
+
+        const dynamicRoutes: Record<
+            string,
+            { _sitemap?: SitemapGenerator<unknown> }
+        > = import.meta.glob("../**/+page.server.ts", {
+            eager: true,
+        });
+        for (const route in dynamicRoutes) {
+            const id =
+                route.replace("..", "").replace("/+page.server.ts", "") || "/";
+
+            if (id.includes("[")) {
                 const entries =
-                    (await (
-                        await import(base + "/+page.server.ts")
-                    )._sitemap?.(req)) ?? [];
+                    (await dynamicRoutes[route]._sitemap?.(req)) ?? [];
 
                 for (const entry of entries)
                     // @ts-expect-error: Typescript can't narrow this
                     stream.write({ url: resolve(id, entry) });
-            } else {
-                // @ts-expect-error: Typescript can't narrow this
-                stream.write({ url: resolve(id) });
             }
         }
     } finally {
@@ -39,3 +52,5 @@ export const GET: RequestHandler = async (req) => {
         headers: { "Content-Type": "application/xml" },
     });
 };
+
+export const prerender = false;
