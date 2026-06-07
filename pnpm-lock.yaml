@@ -4,9 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  '@ark/schema': fdfb1766324bb4be5dd7d5931b41d47331978916e147ed239147357f0cfe5213
-
 importers:
 
   .:
@@ -1976,7 +1973,7 @@ packages:
 
 snapshots:
 
-  '@ark/schema@0.56.0(patch_hash=fdfb1766324bb4be5dd7d5931b41d47331978916e147ed239147357f0cfe5213)':
+  '@ark/schema@0.56.0':
     dependencies:
       '@ark/util': 0.56.0
 
@@ -2779,7 +2776,7 @@ snapshots:
 
   arktype@2.2.0:
     dependencies:
-      '@ark/schema': 0.56.0(patch_hash=fdfb1766324bb4be5dd7d5931b41d47331978916e147ed239147357f0cfe5213)
+      '@ark/schema': 0.56.0
       '@ark/util': 0.56.0
       arkregex: 0.0.5
 
