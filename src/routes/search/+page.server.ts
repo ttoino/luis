@@ -1,7 +1,7 @@
 import { error } from "@sveltejs/kit";
-import { getDocuments } from "$lib/server/kv";
+import { getDocuments } from "$lib/server/kv.js";
 
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad } from "./$types.js";
 
 export const load: PageServerLoad = async ({ platform, url }) => {
     const query = url.searchParams.get("query") || undefined;

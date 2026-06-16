@@ -1,6 +1,6 @@
 import { type } from "arktype";
 
-import { deepPartial } from "./helper";
+import { deepPartial } from "./helper.js";
 
 export const BaseEntity = type({
     name: "string",

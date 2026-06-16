@@ -1,5 +1,5 @@
 import { error } from "@sveltejs/kit";
-import { Champion, Document, Region, Story } from "$lib/schemas/documents";
+import { Champion, Document, Region, Story } from "$lib/schemas/documents.js";
 import { Type, type } from "arktype";
 
 const makeFns = <T extends Type>(

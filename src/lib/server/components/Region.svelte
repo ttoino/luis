@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Region } from "$lib/schemas/documents";
+    import type { Region } from "$lib/schemas/documents.js";
 
     let region: Region = $props();
 </script>

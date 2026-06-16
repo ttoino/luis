@@ -1,4 +1,4 @@
-import type { Champion, Region, Story } from "$lib/schemas/documents";
+import type { Champion, Region, Story } from "$lib/schemas/documents.js";
 import type { Component } from "svelte";
 
 import {
@@ -7,7 +7,7 @@ import {
     FactionResponse,
     SearchResponse,
     StoryResponse,
-} from "$lib/schemas/universe";
+} from "$lib/schemas/universe.js";
 import { type, type Type } from "arktype";
 import {
     WorkflowEntrypoint,

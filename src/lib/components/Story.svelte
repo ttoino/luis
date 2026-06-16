@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Story } from "$lib/schemas/documents";
+    import type { Story } from "$lib/schemas/documents.js";
 
     import { resolve } from "$app/paths";
 

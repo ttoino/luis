@@ -1,10 +1,10 @@
-import type { SitemapGenerator } from "$lib/server/sitemap";
+import type { SitemapGenerator } from "$lib/server/sitemap.js";
 
 import { text } from "@sveltejs/kit";
 import { resolve } from "$app/paths";
 import { SitemapStream, streamToPromise } from "sitemap";
 
-import type { RequestHandler } from "./$types";
+import type { RequestHandler } from "./$types.js";
 
 export const GET: RequestHandler = async (req) => {
     const stream = new SitemapStream({

@@ -1,9 +1,9 @@
-import type { SitemapGenerator } from "$lib/server/sitemap";
+import type { SitemapGenerator } from "$lib/server/sitemap.js";
 
 import { error } from "@sveltejs/kit";
-import { getChampion } from "$lib/server/kv";
+import { getChampion } from "$lib/server/kv.js";
 
-import type { PageServerLoad, RouteParams } from "./$types";
+import type { PageServerLoad, RouteParams } from "./$types.js";
 
 export const load: PageServerLoad = async ({ params, platform }) => {
     const { champion: slug } = params;

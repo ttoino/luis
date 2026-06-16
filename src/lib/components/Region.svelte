@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Region } from "$lib/schemas/documents";
+    import type { Region } from "$lib/schemas/documents.js";
 
     import { resolve } from "$app/paths";
 

@@ -1,1 +1,1 @@
-export { DataPipeline } from "./data-pipeline";
+export { DataPipeline } from "./data-pipeline.js";

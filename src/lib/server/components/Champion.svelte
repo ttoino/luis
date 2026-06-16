@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Champion } from "$lib/schemas/documents";
+    import type { Champion } from "$lib/schemas/documents.js";
 
     import Date from "$lib/components/Date.svelte";
 

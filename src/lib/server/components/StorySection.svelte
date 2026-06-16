@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { StorySection } from "$lib/schemas/universe";
+    import type { StorySection } from "$lib/schemas/universe.js";
 
     let section: StorySection = $props();
 </script>

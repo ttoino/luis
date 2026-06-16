@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { Story } from "$lib/schemas/documents";
+    import type { Story } from "$lib/schemas/documents.js";
 
     import Date from "$lib/components/Date.svelte";
 
