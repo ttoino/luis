@@ -66,12 +66,12 @@ All jobs use `pnpm install --frozen-lockfile`.
 
 ### Runtime Bindings
 
-| Binding  | Service              | Purpose                        |
-| -------- | -------------------- | ------------------------------ |
-| `KV`     | Cloudflare KV        | Stores document JSON           |
-| `SEARCH` | Cloudflare AI Search | Search index for rendered HTML |
-| `PIPELINE` | Workflow           | `DataPipeline` class binding     |
-| `ASSETS` | Static assets        | SvelteKit static files         |
+| Binding    | Service              | Purpose                        |
+| ---------- | -------------------- | ------------------------------ |
+| `KV`       | Cloudflare KV        | Stores document JSON           |
+| `SEARCH`   | Cloudflare AI Search | Search index for rendered HTML |
+| `PIPELINE` | Workflow             | `DataPipeline` class binding   |
+| `ASSETS`   | Static assets        | SvelteKit static files         |
 
 ## Code Style
 

@@ -22,6 +22,7 @@ docker-compose up
 ```
 
 This will start:
+
 - Apache Solr instance for document indexing
 - Python processing pipeline
 - Web client (if available)
