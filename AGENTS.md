@@ -6,7 +6,7 @@ A SvelteKit app deployed to Cloudflare Workers. It fetches League of Legends uni
 
 **Type**: sveltekit + SvelteKit 2 + Svelte 5 + Tailwind CSS v4
 **Runtime**: Cloudflare Workers
-**Package Manager**: pnpm 11.2.2
+**Package Manager**: pnpm 11.0.3
 
 ## Development Environment
 
@@ -25,7 +25,7 @@ nix develop
 ## Commands
 
 - `pnpm dev`: Start Vite dev server
-- `pnpm build`: Production build; runs `svelte-sitemap` automatically after
+- `pnpm build`: Production build
 - `pnpm preview`: Build + `wrangler dev` (tests the Worker locally)
 - `pnpm check`: Typecheck (`svelte-kit sync` + `svelte-check`)
 - `pnpm gen:cf-types`: Regenerate `src/worker-configuration.d.ts` from `wrangler.jsonc`
@@ -88,7 +88,8 @@ All jobs use `pnpm install --frozen-lockfile`.
 - `wrangler.jsonc`: Worker config: bindings, compatibility flags, cron triggers
 - `vite-plugin-worker-exports.ts`: Custom build plugin merging SSR Svelte exports into the worker
 - `src/lib/server/data-pipeline.ts`: Workflow logic for fetching and indexing Riot data
-- `svelte-sitemap.config.ts`: Sitemap generation config (domain: `luis.toino.pt`)
+- `src/routes/sitemap.xml/+server.ts`: Dynamic sitemap endpoint (domain: `luis.toino.pt`)
+- `src/lib/server/sitemap.ts`: Sitemap generator type definitions
 - `svelte.config.js`: SvelteKit configuration
 - `vite.config.ts`: Vite plugins and build config
 - `tsconfig.json`: TypeScript compiler options
@@ -105,4 +106,4 @@ This project uses **Renovate** for dependency updates. Renovate opens a single m
 Cloudflare Workers via Wrangler. The site is deployed through the Cloudflare dashboard, not via CI.
 
 - `pnpm deploy` uses Wrangler and targets the config in `wrangler.jsonc`.
-- The Workflow is triggered on a weekly cron (`0 0 * * SUN`).
+- The Workflow is triggered on a daily cron (`0 0 * * *`).

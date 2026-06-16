@@ -1,48 +1,25 @@
-# FEUP-PRI
+# ![LUIS](./src/lib/images/logo.svg)
 
-Group project for the PRI course unit at FEUP.
+**LoL Universe Indexing and Search**
 
-This project focused on building an information retrieval system for a collection of scientific papers. The system includes document processing, indexing, search capabilities, and evaluation metrics.
+A fast, searchable archive of League of Legends universe lore.
 
-## Components
+**Live site: [luis.toino.pt](https://luis.toino.pt)**
 
-- **Collection**: Scripts for collecting and preprocessing scientific papers
-- **Processing**: Text processing and feature extraction (tokenization, stemming, etc.)
-- **Indexing**: Apache Solr configuration and schema for document indexing
-- **Querying**: Search interface and query processing
-- **Evaluation**: Information retrieval evaluation metrics and relevance judgments
-- **Client**: Web interface for searching the document collection
+## What is LUIS?
 
-## Running
+LUIS lets you explore the lore of the League of Legends universe — champions, regions, and stories — in one clean, searchable interface.
 
-The project uses Docker Compose to orchestrate the services:
+## Features
 
-```bash
-docker-compose up
-```
+- **Browse** champions, regions, and stories from the League universe
+- **Search** across lore with AI-powered search
+- **Stay up to date** — data is synced daily from [Riot's Universe API](https://universe.leagueoflegends.com)
 
-This will start:
+## Data
 
-- Apache Solr instance for document indexing
-- Python processing pipeline
-- Web client (if available)
+All content is sourced from Riot Games' official Universe API. The archive is refreshed automatically every day.
 
-## Requirements
+## Development
 
-- Docker and Docker Compose
-- Python 3.x (for local development)
-- See `requirements.txt` for Python dependencies
-
-## Unit info
-
-- **Name**: Processamento e Representação de Informação (Information Processing and Representation)
-- **Date**: Year 1, Semester 1, 2023/24
-- [**More info**](https://sigarra.up.pt/feup/ucurr_geral.ficha_uc_view?pv_ocorrencia_id=518807)
-
-## Disclaimer
-
-This repository (and all others with the name format `feup-*`) are for archival and educational purposes only.
-
-If you don't understand some part of the code or anything else in this repo, feel free to ask (although I may not understand it myself anymore).
-
-Keep in mind that this repo is public. If you copy any code and use it in your school projects you may be flagged for plagiarism by automated tools.
+Technical details, local setup, and architecture notes are in [`AGENTS.md`](./AGENTS.md).
