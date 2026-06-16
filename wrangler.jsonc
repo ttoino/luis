@@ -28,11 +28,9 @@
             "binding": "PIPELINE",
             "class_name": "DataPipeline",
             "name": "luis",
+            "schedules": ["0 0 * * *"],
         },
     ],
-    "triggers": {
-        "crons": ["0 0 * * SUN"],
-    },
     "workers_dev": true,
     "preview_urls": true,
     "observability": {
