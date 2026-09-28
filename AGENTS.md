@@ -4,9 +4,9 @@
 
 A SvelteKit app deployed to Cloudflare Workers. It fetches League of Legends universe data from Riot's API via a scheduled Workflow, renders Svelte components to HTML, and stores them in KV + AI Search. The frontend reads from KV/AI Search at runtime.
 
-**Type**: sveltekit + SvelteKit 2 + Svelte 5 + Tailwind CSS v4
-**Runtime**: Cloudflare Workers
-**Package Manager**: pnpm 11.0.3
+**Type**: SvelteKit app + Tailwind CSS v4
+**Runtime**: Cloudflare Workers / Pages
+**Package Manager**: pnpm 11.2.2
 
 ## Development Environment
 
@@ -28,11 +28,12 @@ nix develop
 - `pnpm build`: Production build
 - `pnpm preview`: Build + `wrangler dev` (tests the Worker locally)
 - `pnpm check`: Typecheck (`svelte-kit sync` + `svelte-check`)
-- `pnpm gen:cf-types`: Regenerate `src/worker-configuration.d.ts` from `wrangler.jsonc`
+- `pnpm check:watch`: Typecheck in watch mode
 - `pnpm lint`: ESLint
-- `pnpm lint:fix`: ESLint --fix
+- `pnpm lint:fix`: ESLint with auto-fix
 - `pnpm format`: Prettier check
 - `pnpm format:fix`: Prettier write
+- `pnpm gen:cf-types`: Regenerate `src/worker-configuration.d.ts` from `wrangler.jsonc`
 - `pnpm deploy`: Deploy via Wrangler
 
 ## CI Pipeline
@@ -40,7 +41,7 @@ nix develop
 GitHub Actions runs independent jobs on PRs/pushes to `main`/`develop`:
 
 1. `format` — Prettier formatting
-2. `lint` — ESLint with TypeScript, Svelte and Perfectionist
+2. `lint` — ESLint with TypeScript, Svelte, and Perfectionist
 3. `typecheck` — `svelte-check` (requires `gen:cf-types` first)
 4. `build` — Production build
 
@@ -103,7 +104,7 @@ This project uses **Renovate** for dependency updates. Renovate opens a single m
 
 ## Deployment
 
-Cloudflare Workers via Wrangler. The site is deployed through the Cloudflare dashboard, not via CI.
+Cloudflare Workers/Pages via Wrangler. The site is deployed through the Cloudflare dashboard, not via CI.
 
 - `pnpm deploy` uses Wrangler and targets the config in `wrangler.jsonc`.
 - The Workflow is triggered on a daily cron (`0 0 * * *`).
