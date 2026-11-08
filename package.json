@@ -20,7 +20,7 @@
         "@eslint/js": "^10.0.1",
         "@oselvar/sveltekit-add-worker-exports": "^0.3.1",
         "@sveltejs/adapter-cloudflare": "^7.2.8",
-        "@sveltejs/enhanced-img": "^0.10.4",
+        "@sveltejs/enhanced-img": "^0.11.0",
         "@sveltejs/kit": "^2.62.0",
         "@sveltejs/vite-plugin-svelte": "^7.1.2",
         "@tailwindcss/typography": "^0.5.19",
@@ -52,5 +52,5 @@
         "wrangler": "^4.97.0"
     },
     "type": "module",
-    "packageManager": "pnpm@11.2.2"
+    "packageManager": "pnpm@11.28.11"
 }
