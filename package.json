@@ -1,6 +1,14 @@
 {
     "name": "luis",
     "version": "0.0.1",
+    "description": "LoL Universe Indexing and Search",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ttoino/luis.git"
+    },
+    "homepage": "https://github.com/ttoino/luis",
+    "bugs": "https://github.com/ttoino/luis/issues",
+    "type": "module",
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
@@ -16,7 +24,7 @@
         "deploy": "wrangler deploy"
     },
     "devDependencies": {
-        "@eslint/compat": "^2.1.0",
+        "@eslint/compat": "2.1.1",
         "@eslint/js": "^10.0.1",
         "@oselvar/sveltekit-add-worker-exports": "^0.3.1",
         "@sveltejs/adapter-cloudflare": "^7.2.8",
@@ -51,6 +59,5 @@
         "vite": "^8.0.16",
         "wrangler": "^4.97.0"
     },
-    "type": "module",
     "packageManager": "pnpm@11.28.11"
 }

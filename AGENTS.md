@@ -4,9 +4,9 @@
 
 A SvelteKit app deployed to Cloudflare Workers. It fetches League of Legends universe data from Riot's API via a scheduled Workflow, renders Svelte components to HTML, and stores them in KV + AI Search. The frontend reads from KV/AI Search at runtime.
 
-**Type**: SvelteKit app + Tailwind CSS v4
+**Type**: SvelteKit app + Tailwind CSS
 **Runtime**: Cloudflare Workers / Pages
-**Package Manager**: pnpm 11.2.2
+**Package Manager**: pnpm
 
 ## Development Environment
 
@@ -42,10 +42,10 @@ GitHub Actions runs independent jobs on PRs/pushes to `main`/`develop`:
 
 1. `format` — Prettier formatting
 2. `lint` — ESLint with TypeScript, Svelte, and Perfectionist
-3. `typecheck` — `svelte-check` (requires `gen:cf-types` first)
-4. `build` — Production build
+3. `typecheck` — generate Cloudflare types, then `svelte-check`
+4. `build` — generate Cloudflare types, then production build
 
-All jobs use `pnpm install --frozen-lockfile`.
+All jobs use the `./.github/actions/setup-project` composite action.
 
 ## Architecture Notes
 
@@ -104,7 +104,6 @@ This project uses **Renovate** for dependency updates. Renovate opens a single m
 
 ## Deployment
 
-Cloudflare Workers/Pages via Wrangler. The site is deployed through the Cloudflare dashboard, not via CI.
+Cloudflare Workers/Pages via Wrangler. Run `pnpm run build` before `wrangler deploy`.
 
-- `pnpm deploy` uses Wrangler and targets the config in `wrangler.jsonc`.
-- The Workflow is triggered on a daily cron (`0 0 * * *`).
+When using the Cloudflare dashboard Git integration, set the build command to `pnpm build` so `wrangler deploy` does not build twice.
