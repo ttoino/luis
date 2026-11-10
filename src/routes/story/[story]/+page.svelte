@@ -88,7 +88,7 @@
 {/if}
 
 {#await data.relatedChampions then champions}
-    {@const sectionChampions = champions[section]}
+    {const sectionChampions = $derived(champions[section])}
     {#if sectionChampions}
         <h3 class="h2 mt-8 mb-8 text-center text-gold-1">Featuring</h3>
         <div class="grid" in:fly={{ x: 48 }} out:fly={{ x: -48 }}>
